@@ -1,0 +1,22 @@
+<IfModule mod_rewrite.c>
+	Options +FollowSymLinks
+	RewriteEngine On
+</IfModule>
+
+# force the www.
+<IfModule mod_rewrite.c>
+	RewriteCond %{HTTP_HOST} !^www\.
+	RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+</IfModule>
+
+# send css, js and images to the resource.php file so they can be optimized
+<IfModule mod_rewrite.c>
+	ReWriteRule (.*.(css|js|gif|jpeg|jpg|png))$ resource.php?x=$1   [L,NS,NC,QSA]
+</IfModule>
+
+# send request at index.php
+<IfModule mod_rewrite.c>
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>

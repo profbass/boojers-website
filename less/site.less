@@ -1,0 +1,34 @@
+#site-header {
+     //http://jsfiddle.net/HRWqq/
+     background: url(/img/boojers-header-logo.png) no-repeat 0 0 @grayDarker;
+     .navbar {
+          margin: 0 0 0 323px;
+          .navbar-inner {
+               margin: 0;
+               padding: 0;
+               min-height: 99px;
+          }
+          .brand {
+               margin: 0;
+               padding: 0;
+          }
+          .nav {
+
+          }
+          .nav > li {
+               background: @grayDarker;
+               border-top: 1px solid #313131;
+          }
+          .nav > li > a {
+               font-size: 16px;
+               text-transform: lowercase;
+               color: @red;
+               .rotate(40deg);
+          }
+          .nav > .active > a,
+          .nav > li > a:hover,
+          .nav > li > a:focus {
+               color: @red;
+          }
+     }
+}

@@ -38,8 +38,9 @@
         <div class="container-fluid">
             @yield('content')
         </div>
-        @include('content::footers.footer')
+        <footer id="site-footer">
 
+        </footer>
         <script src="/dist/app.min.js"></script>
        
         {{ Asset::scripts() }}

@@ -9,6 +9,7 @@ return array(
 		'Dashboard' => '/admin',
 		'Content' => '/admin/content',
 		'Users' => '/admin/users',
+		'Boojers' => '/admin/boojer',
 		'My Account' => '/admin/myaccount',
 		'Logout' => '/admin/logout',
 	),

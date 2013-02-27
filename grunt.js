@@ -29,12 +29,6 @@ module.exports = function(grunt) {
           'public/js/application.js'
         ],
         dest: 'public/dist/app.min.js'
-      },
-      distB: {
-        src: [
-          'public/js/homepage.js'
-        ],
-        dest: 'public/dist/homepage.min.js'
       }
     },
 
@@ -81,7 +75,8 @@ module.exports = function(grunt) {
       },
       globals: {
         jQuery: true,
-        google: true
+        google: true,
+        Mustache: true,
       }
     }
 

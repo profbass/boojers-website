@@ -44,6 +44,9 @@
 	margin: 0;
 	float: right;
 }
+.cursor {
+	cursor: pointer;
+}
 
 /* === HTML5 validation styles === */	
 form input:required,

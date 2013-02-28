@@ -18,19 +18,20 @@ class Boojer_Admin_Boojtag_Controller extends Admin_Base_Controller {
 
 	public function get_index()
 	{
-		$this->view_arguments['albums'] = Boojtag::get_for_admin();
-
+		$this->view_arguments['tags'] = Boojtag::get_for_admin();
 		return View::make('boojer::admin.tags.list', $this->view_arguments);
 	}
 
 	public function get_create()
 	{
+		$this->view_arguments['tag_types'] = Config::get('Boojer::boojer.tag_types');
 		return View::make('boojer::admin.tags.create', $this->view_arguments);
 	}
 
 	public function get_edit($id = FALSE)
 	{
-		$this->view_arguments['user'] = Boojtag::get_by_id($id);
+		$this->view_arguments['tag'] = Boojtag::get_by_id($id);
+		$this->view_arguments['tag_types'] = Config::get('Boojer::boojer.tag_types');
 		return View::make('boojer::admin.tags.edit', $this->view_arguments);
 	}
 
@@ -39,7 +40,8 @@ class Boojer_Admin_Boojtag_Controller extends Admin_Base_Controller {
 		$input = Input::all();
 		
 		$rules = array(
-			'name' => 'required',
+			'name' => 'required|unique:boojtags',
+			'type' => 'required',
 		);
 
 		$validation = Validator::make($input, $rules);
@@ -49,7 +51,7 @@ class Boojer_Admin_Boojtag_Controller extends Admin_Base_Controller {
 		} else {
 			$test = Boojtag::create_item($input);
 			if ($test) {
-				return Redirect::to($this->controller_alias)->with('success_message', 'Tag Created.');
+				return Redirect::to($this->controller_alias . '/tags')->with('success_message', 'Tag Created.');
 			}
 			return Redirect::back()->with_input()->with('error_message', 'Error Occured');
 		}
@@ -60,7 +62,8 @@ class Boojer_Admin_Boojtag_Controller extends Admin_Base_Controller {
 		$input = Input::all();
 		if ($id) {
 			$rules = array(
-				'name' => 'required',
+				'name' => 'required|unique:boojtags,name,' . $id,
+				'type' => 'required',
 			);
 
 			$validation = Validator::make($input, $rules);
@@ -70,8 +73,8 @@ class Boojer_Admin_Boojtag_Controller extends Admin_Base_Controller {
 			} else {
 				$test = Boojtag::update_item($id, $input);
 				if ($test) {
-					return Redirect::to($this->controller_alias)->with('success_message', 'Tag Updated.');
-				}
+					return Redirect::to($this->controller_alias . '/tags')->with('success_message', 'Tag Updated.');
+				} 
 			}
 		}
 		return Redirect::back()->with_input()->with('error_message', 'Error Occured');

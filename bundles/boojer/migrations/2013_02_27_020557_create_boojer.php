@@ -14,15 +14,18 @@ class Boojer_Create_Boojer {
 			$table->increments('id')->unsigned();
 			$table->string('name')->nullable();
 			$table->string('caption')->nullable();
+			$table->string('path')->unique();
 			$table->integer('width')->unsigned()->nullable();
 			$table->integer('height')->unsigned()->nullable();
+			$table->integer('votes')->unsigned()->default(0);
 			$table->timestamps();
 		});
 
 		// Create album table
 		Schema::create('albums', function($table) {
 			$table->increments('id')->unsigned();
-			$table->string('name')->nullable();
+			$table->string('slug')->unique();
+			$table->string('name')->unique();
 			$table->string('description')->nullable();
 			$table->timestamps();
 		});
@@ -40,7 +43,13 @@ class Boojer_Create_Boojer {
 			$table->increments('id')->unsigned();
 			$table->string('first_name')->nullable();
 			$table->string('last_name')->nullable();
+			$table->string('email')->unique();
+			$table->string('password')->nullable();
 			$table->string('title')->nullable();
+			$table->string('fun_photo')->nullable();
+			$table->string('fun_photo_small')->nullable();
+			$table->string('professional_photo')->nullable();
+			$table->string('professional_small')->nullable();
 			$table->text('professional_bio')->nullable();
 			$table->text('fun_bio')->nullable();
 			$table->timestamps();
@@ -57,13 +66,14 @@ class Boojer_Create_Boojer {
 		// Create boojtags table
 		Schema::create('boojtags', function($table) {
 			$table->increments('id')->unsigned();
-			$table->string('name')->unique()->nullable();
-			$table->string('type')->nullable();
+			$table->string('slug')->unique();
+			$table->string('name')->unique();
+			$table->string('type')->default('fun');
 			$table->timestamps();
 		});
 
-		// Create boojer_tag table
-		Schema::create('boojer_tag', function($table) {
+		// Create boojer_boojtag table
+		Schema::create('boojer_boojtag', function($table) {
 			$table->increments('id')->unsigned();
 			$table->integer('boojer_id')->unsigned();
 			$table->integer('boojtag_id')->unsigned();
@@ -89,7 +99,7 @@ class Boojer_Create_Boojer {
 
 		Schema::drop('boojtags');
 
-		Schema::drop('boojer_tag');
+		Schema::drop('boojer_boojtag');
 	}
 
 }

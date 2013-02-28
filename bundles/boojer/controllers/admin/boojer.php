@@ -1,6 +1,7 @@
 <?php
 
 use Boojer\Models\Boojer as Boojer;
+use Boojer\Models\Boojtag as Boojtag;
 
 class Boojer_Admin_Boojer_Controller extends Admin_Base_Controller {
     public $restful = true;
@@ -25,12 +26,16 @@ class Boojer_Admin_Boojer_Controller extends Admin_Base_Controller {
 
 	public function get_create()
 	{
+		$this->view_arguments['dims'] = Config::get('Boojer::boojer.avatar');
+		$this->view_arguments['tags'] = Boojtag::get_for_admin();		
 		return View::make('boojer::admin.boojer.create', $this->view_arguments);
 	}
 
 	public function get_edit($id = FALSE)
 	{
 		$this->view_arguments['user'] = Boojer::get_by_id($id);
+		$this->view_arguments['dims'] = Config::get('Boojer::boojer.avatar');
+		$this->view_arguments['tags'] = Boojtag::get_for_admin();
 		return View::make('boojer::admin.boojer.edit', $this->view_arguments);
 	}
 
@@ -41,7 +46,10 @@ class Boojer_Admin_Boojer_Controller extends Admin_Base_Controller {
 		$rules = array(
 			'first_name' => 'required',
 			'last_name' => 'required',
+			'email' => 'required|email',
 			'title' => 'required',
+			'professional_photo' => 'mimes:jpg,gif,png,jpeg',
+			'fun_photo' => 'mimes:jpg,gif,png,jpeg',
 		);
 
 		$validation = Validator::make($input, $rules);
@@ -64,7 +72,10 @@ class Boojer_Admin_Boojer_Controller extends Admin_Base_Controller {
 			$rules = array(
 				'first_name' => 'required',
 				'last_name' => 'required',
+				'email' => 'required|email',
 				'title' => 'required',
+				'professional_photo' => 'mimes:jpg,gif,png,jpeg',
+				'fun_photo' => 'mimes:jpg,gif,png,jpeg',
 			);
 
 			$validation = Validator::make($input, $rules);

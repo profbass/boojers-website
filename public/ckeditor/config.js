@@ -9,12 +9,12 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.forcePasteAsPlainText = true;
 
-	CKEDITOR.config.contentsCss = '/dist/ckeditor.css';
+	CKEDITOR.config.contentsCss = '/css/ckeditor.css';
 
 	config.toolbar = [
 		{ name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Save', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo', 'RemoveFormat' ] },
 		{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Scayt' ] },
-		{ name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+		{ name: 'links', items: [ 'Link', 'Unlink' ] },
 		{ name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] },
 		{ name: 'tools', items: [ 'Maximize' ] },
 		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source' ] },

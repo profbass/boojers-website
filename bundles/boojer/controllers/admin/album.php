@@ -1,6 +1,7 @@
 <?php
 
 use Boojer\Models\Album as Album;
+use Boojer\Models\Photo as Photo;
 
 class Boojer_Admin_Album_Controller extends Admin_Base_Controller {
     public $restful = true;
@@ -30,8 +31,14 @@ class Boojer_Admin_Album_Controller extends Admin_Base_Controller {
 
 	public function get_edit($id = FALSE)
 	{
-		$this->view_arguments['user'] = Album::get_by_id($id);
+		$this->view_arguments['album'] = Album::get_by_id($id);
 		return View::make('boojer::admin.albums.edit', $this->view_arguments);
+	}
+
+	public function get_edit_photos($id = FALSE)
+	{
+		$this->view_arguments['album'] = Album::get_by_id_with_photos($id);
+		return View::make('boojer::admin.albums.edit_photos', $this->view_arguments);
 	}
 
 	public function post_store()
@@ -39,7 +46,7 @@ class Boojer_Admin_Album_Controller extends Admin_Base_Controller {
 		$input = Input::all();
 		
 		$rules = array(
-			'name' => 'required',
+			'name' => 'required|unique:albums',
 		);
 
 		$validation = Validator::make($input, $rules);
@@ -49,7 +56,7 @@ class Boojer_Admin_Album_Controller extends Admin_Base_Controller {
 		} else {
 			$test = Album::create_item($input);
 			if ($test) {
-				return Redirect::to($this->controller_alias)->with('success_message', 'Album Created.');
+				return Redirect::to($this->controller_alias . '/albums')->with('success_message', 'Album Created.');
 			}
 			return Redirect::back()->with_input()->with('error_message', 'Error Occured');
 		}
@@ -60,7 +67,7 @@ class Boojer_Admin_Album_Controller extends Admin_Base_Controller {
 		$input = Input::all();
 		if ($id) {
 			$rules = array(
-				'name' => 'required',
+				'name' => 'required|unique:albums,name,' . $id,
 			);
 
 			$validation = Validator::make($input, $rules);
@@ -70,12 +77,60 @@ class Boojer_Admin_Album_Controller extends Admin_Base_Controller {
 			} else {
 				$test = Album::update_item($id, $input);
 				if ($test) {
-					return Redirect::to($this->controller_alias)->with('success_message', 'Album Updated.');
+					return Redirect::to($this->controller_alias . '/albums')->with('success_message', 'Album Updated.');
 				}
 			}
 		}
 		return Redirect::back()->with_input()->with('error_message', 'Error Occured');
 	}
+
+	public function post_store_photo($id = FALSE)
+	{
+		$input = Input::all();
+		$max_kb = Config::get('Boojer::boojer.photo_max_kb');
+		$rules = array(
+			'photo' => 'required|mimes:jpg,gif,png,jpeg|max:' . $max_kb,
+		);
+
+		if ($id) {
+			$test = Photo::store($id, $input);
+			if ($test) {
+				return Redirect::Back()->with('success_message', 'Photo Added.');
+			}
+		}
+
+		return Redirect::back()->with('error_message', 'Error Occured');
+	}
+
+	public function post_update_photo($id = FALSE)
+	{
+		$input = Input::all();
+
+		if ($id) {
+			$test = Photo::update($id, $input);
+		}
+		return '';
+	}
+
+	public function get_destroy_photo($id = FALSE)
+	{
+		if ($id) {
+			$test = Photo::destroy($id);
+			if ($test) {
+				return Redirect::Back()->with('success_message', 'Photo Deleted.');
+			}
+		}
+
+		return Redirect::back()->with('error_message', 'Error Occured');
+	}
+
+	public function post_destroy_photo($id = FALSE)
+	{
+		if ($id) {
+			$test = Photo::destroy($id);
+		}
+		return '';
+	}	
 
 	public function get_destroy($id = false) 
 	{

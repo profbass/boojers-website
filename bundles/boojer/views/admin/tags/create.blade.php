@@ -49,7 +49,8 @@
                 </div>
 
 				<div class="form-actions">
-					<button type="submit" name="submit" value="1" class="btn btn-success">Create</button>
+					<button type="submit" name="submit" value="1" class="btn btn-success btn-large">Create</button>
+					<a href="<?=$controller_alias;?>/tags" class="btn btn-warning">Cancel</a>
 				</div>
 				<?php echo Form::token(); ?>
 			</fieldset>

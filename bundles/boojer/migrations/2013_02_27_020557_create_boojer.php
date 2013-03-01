@@ -15,6 +15,7 @@ class Boojer_Create_Boojer {
 			$table->string('name')->nullable();
 			$table->string('caption')->nullable();
 			$table->string('path')->unique();
+			$table->string('thumb_path')->unique();
 			$table->integer('width')->unsigned()->nullable();
 			$table->integer('height')->unsigned()->nullable();
 			$table->integer('votes')->unsigned()->default(0);
@@ -26,12 +27,13 @@ class Boojer_Create_Boojer {
 			$table->increments('id')->unsigned();
 			$table->string('slug')->unique();
 			$table->string('name')->unique();
-			$table->string('description')->nullable();
+			$table->text('description')->nullable();
+			$table->integer('votes')->unsigned()->default(0);
 			$table->timestamps();
 		});
 
-		// Create photo album table
-		Schema::create('photo_album', function($table) {
+		// Create album_photo table
+		Schema::create('album_photo', function($table) {
 			$table->increments('id')->unsigned();
 			$table->integer('photo_id')->unsigned();
 			$table->integer('album_id')->unsigned();
@@ -49,7 +51,7 @@ class Boojer_Create_Boojer {
 			$table->string('fun_photo')->nullable();
 			$table->string('fun_photo_small')->nullable();
 			$table->string('professional_photo')->nullable();
-			$table->string('professional_small')->nullable();
+			$table->string('professional_photo_small')->nullable();
 			$table->text('professional_bio')->nullable();
 			$table->text('fun_bio')->nullable();
 			$table->timestamps();
@@ -93,7 +95,7 @@ class Boojer_Create_Boojer {
 
 		Schema::drop('albums');
 
-		Schema::drop('photo_album');
+		Schema::drop('album_photo');
 
 		Schema::drop('photo_boojer');
 

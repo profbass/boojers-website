@@ -10,9 +10,10 @@
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css" rel="stylesheet">
-        <link href="/bundles/admin/css/bootstrap.css" media="all" rel="stylesheet">
-        <link href="/bundles/admin/css/styles.css" media="all"rel="stylesheet">
-        <link href="/bundles/admin/css/bootstrap-responsive.min.css" media="all" rel="stylesheet">
+        <link href="/bundles/admin/css/bootstrap.css" rel="stylesheet">
+        <link href="/bundles/admin/css/styles.css" rel="stylesheet">
+        <link href="/bundles/admin/css/bootstrap-responsive.min.css" rel="stylesheet">       
+
         {{ Asset::styles() }}
         @yield('styles')
     </head>
@@ -60,12 +61,12 @@
             ?>
             @yield('content')
         </div>
+
+        <script src="/bundles/admin/js/jquery-1.9.1.min.js"></script>
+        <script src="/bundles/admin/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.min.js"></script>
+        {{ Asset::scripts() }}
+        @yield('scripts')
+        <script src="/bundles/admin/js/admin.js"></script>
     </body>
-    
-    <script src="/bundles/admin/js/jquery-1.8.3.min.js"></script>
-    <script src="/bundles/admin/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.min.js"></script>
-    {{ Asset::scripts() }}
-    @yield('scripts')
-    <script src="/bundles/admin/js/admin.js"></script>
 </html>

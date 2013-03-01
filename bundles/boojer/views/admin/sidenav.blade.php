@@ -1,7 +1,8 @@
 <div class="well sidebar-nav">
 	<ul class="nav nav-list">
 		<li class="nav-header">Boojers Navigation</li>
-		<li><a href="<?=$admin_alias;?>/boojer">All Boojers</a></li>
+		<li><a href="<?=$admin_alias;?>/boojer">Boojers</a></li>
+		<li><a href="<?=$admin_alias;?>/boojer/create">Create Boojer</a></li>
 		
 		<li class="nav-header">Boojers Photo Navigation</li>
 

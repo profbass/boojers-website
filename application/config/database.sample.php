@@ -68,10 +68,10 @@ $db_array = array(
 		),
 
 		'mysql' => array(
-			'driver'   => '',
-			'host'     => '',
-			'database' => '',
-			'username' => '',
+			'driver'   => 'mysql',
+			'host'     => 'localhost',
+			'database' => 'database',
+			'username' => 'root',
 			'password' => '',
 			'charset'  => 'utf8',
 			'prefix'   => '',

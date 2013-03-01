@@ -167,7 +167,8 @@
                 </div>
 
 				<div class="form-actions">
-					<button type="submit" name="submit" value="1" class="btn btn-success">Update</button>
+					<button type="submit" name="submit" value="1" class="btn btn-success btn-large">Update</button>
+					<a href="<?=$controller_alias;?>" class="btn btn-warning">Cancel</a>
 				</div>
 				<?php echo Form::token(); ?>
 			</fieldset>

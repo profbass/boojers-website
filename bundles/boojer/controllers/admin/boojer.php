@@ -42,14 +42,14 @@ class Boojer_Admin_Boojer_Controller extends Admin_Base_Controller {
 	public function post_store()
 	{
 		$input = Input::all();
-		
+		$max_kb = Config::get('Boojer::boojer.avatar_max_kb');
 		$rules = array(
 			'first_name' => 'required',
 			'last_name' => 'required',
 			'email' => 'required|email',
 			'title' => 'required',
-			'professional_photo' => 'mimes:jpg,gif,png,jpeg',
-			'fun_photo' => 'mimes:jpg,gif,png,jpeg',
+			'professional_photo' => 'mimes:jpg,gif,png,jpeg|max:' . $max_kb,
+			'fun_photo' => 'mimes:jpg,gif,png,jpeg|max:' . $max_kb,
 		);
 
 		$validation = Validator::make($input, $rules);
@@ -61,22 +61,26 @@ class Boojer_Admin_Boojer_Controller extends Admin_Base_Controller {
 			if ($test) {
 				return Redirect::to($this->controller_alias)->with('success_message', 'Boojer Created.');
 			}
-			return Redirect::back()->with_input()->with('error_message', 'Error Occured');
 		}
+		return Redirect::back()->with_input()->with('error_message', 'Error Occured');
 	}
 
 	public function post_update($id = FALSE)
 	{
 		$input = Input::all();
+		$max_kb = Config::get('Boojer::boojer.avatar_max_kb');
+
 		if ($id) {
 			$rules = array(
 				'first_name' => 'required',
 				'last_name' => 'required',
 				'email' => 'required|email',
 				'title' => 'required',
-				'professional_photo' => 'mimes:jpg,gif,png,jpeg',
-				'fun_photo' => 'mimes:jpg,gif,png,jpeg',
+				'professional_photo' => 'mimes:jpg,gif,png,jpeg|max:' . $max_kb,
+				'fun_photo' => 'mimes:jpg,gif,png,jpeg|max:' . $max_kb,
 			);
+
+			echo $max_kb;
 
 			$validation = Validator::make($input, $rules);
 

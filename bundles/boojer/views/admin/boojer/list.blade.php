@@ -30,7 +30,7 @@
 		     				<td>
 								<div class="btn-toolbar">
 									<div class="btn-group">
-				     					<a href="<?=$controller_alias;?>/edit/<?=$item->id;?>" class="btn btn-mini"><i class="icon-edit"></i> Edit Info</a>
+				     					<a href="<?=$controller_alias;?>/edit/<?=$item->id;?>" class="btn btn-mini"><i class="icon-edit"></i> Edit</a>
 				     					<a href="<?=$controller_alias;?>/destroy/<?=$item->id;?>" class="btn btn-danger btn-mini" data-action="confirm"><i class="icon-remove icon-white"></i> Delete</a>
 		     						</div>
 		     					</div>
@@ -40,9 +40,9 @@
 	     		</tbody>
 	     	</table>
 	    <?php else: ?>
-	    	<p>No Boojers. <a  class="btn btn-primary" href="<?=$controller_alias;?>/create">Create Boojer</a></p>
+	    	<p>No Boojers.</p>
+	    	<p><a  class="btn btn-primary" href="<?=$controller_alias;?>/create">Create Boojer</a></p>
      	<?php endif; ?>
-
     </div>
 </div>
 @endsection

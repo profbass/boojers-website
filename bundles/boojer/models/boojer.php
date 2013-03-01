@@ -96,10 +96,10 @@ class Boojer extends Eloquent {
 		return FALSE;
 	}
 
-	public static function resize_photo($src, $save, $width, $height)
+	public static function resize_photo($src, $save, $width, $height, $resize = 'crop')
 	{
 		Resizer::open( $_SERVER['DOCUMENT_ROOT'] . '/uploads/boojers/' . $src )
-			->resize( $width , $height , 'crop' )
+			->resize( $width , $height , $resize )
 			->save( $_SERVER['DOCUMENT_ROOT'] . '/uploads/boojers/' . $save , 100 )
 		;
 	}
@@ -112,10 +112,14 @@ class Boojer extends Eloquent {
 
 				$dimsBig = Config::get('Boojer::boojer.avatar');
 				$dimsSmall = Config::get('Boojer::boojer.avatar_small');
+				
+				if (!is_dir($_SERVER['DOCUMENT_ROOT'] . '/uploads/boojers')) {
+					mkdir($_SERVER['DOCUMENT_ROOT'] . '/uploads/boojers');
+				}
 
 				if (!empty($args['professional_photo']) && $args['professional_photo']['error'] == 0) {
-					$photo_p_name = uniqid('boojer-p-' . $item->id . '-') . '.' . strtolower(File::extension(Input::file('professional_photo.name')));
-					$photo_p_small = uniqid('boojer-p-small-' . $item->id . '-') . '.' . strtolower(File::extension(Input::file('professional_photo.name')));
+					$photo_p_name = uniqid('boojer-pro-' . $item->id . '-') . '.' . strtolower(File::extension(Input::file('professional_photo.name')));
+					$photo_p_small = uniqid('boojer-pro-thumb-' . $item->id . '-') . '.' . strtolower(File::extension(Input::file('professional_photo.name')));
 					
 					Input::upload('professional_photo', $_SERVER['DOCUMENT_ROOT'] . '/uploads/boojers', $photo_p_name);
 
@@ -123,13 +127,13 @@ class Boojer extends Eloquent {
 					$item->professional_photo_small = '/uploads/boojers/' . $photo_p_small;
 					$item->save();
 
-					Boojer::resize_photo($photo_p_name, $photo_p_name, $dimsBig['width'] , $dimsBig['height']);
-					Boojer::resize_photo($photo_p_name, $photo_p_small, $dimsSmall['width'] , $dimsSmall['height']);
+					Boojer::resize_photo($photo_p_name, $photo_p_name, $dimsBig['width'] , $dimsBig['height'], $dimsBig['resize']);
+					Boojer::resize_photo($photo_p_name, $photo_p_small, $dimsSmall['width'] , $dimsSmall['height'], $dimsSmall['resize']);
 				}
 
 				if (!empty($args['fun_photo']) && $args['fun_photo']['error'] == 0) {
-					$photo_f_name = uniqid('boojer-f-' . $item->id . '-') . '.' . strtolower(File::extension(Input::file('fun_photo.name')));
-					$photo_f_small = uniqid('boojer-f-small-' .$item->id . '-') . '.' . strtolower(File::extension(Input::file('fun_photo.name')));
+					$photo_f_name = uniqid('boojer-fun-' . $item->id . '-') . '.' . strtolower(File::extension(Input::file('fun_photo.name')));
+					$photo_f_small = uniqid('boojer-fun-thumb-' .$item->id . '-') . '.' . strtolower(File::extension(Input::file('fun_photo.name')));
 
 					Input::upload('fun_photo', $_SERVER['DOCUMENT_ROOT'] . '/uploads/boojers', $photo_f_name);
 				

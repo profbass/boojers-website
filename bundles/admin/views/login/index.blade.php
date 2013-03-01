@@ -9,9 +9,9 @@
         <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        <link href="/bundles/admin/css/bootstrap.2.2.1.css" media="all" rel="stylesheet">
+        <link href="/bundles/admin/css/bootstrap.css" media="all" rel="stylesheet">
         <link href="/bundles/admin/css/styles.css" media="all"rel="stylesheet">
-        <link href="/bundles/admin/css/bootstrap.2.2.1-responsive.min.css" media="all" rel="stylesheet">
+        <link href="/bundles/admin/css/bootstrap-responsive.min.css" media="all" rel="stylesheet">
         {{ Asset::styles() }}
         @yield('styles')
     </head>

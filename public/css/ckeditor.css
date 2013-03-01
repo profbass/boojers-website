@@ -1,0 +1,5 @@
+@import url('/dist/style.min.css');
+body {
+	background: none;
+	margin: 20px;
+}

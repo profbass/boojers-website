@@ -76,7 +76,7 @@ module.exports = function(grunt) {
       globals: {
         jQuery: true,
         google: true,
-        Mustache: true,
+        Mustache: true
       }
     }
 

@@ -30,7 +30,7 @@
 		     				<td>
 								<div class="btn-toolbar">
 									<div class="btn-group">
-				     					<a href="<?=$controller_alias;?>/edit_tag/<?=$item->id;?>" class="btn btn-mini"><i class="icon-edit"></i> Edit Info</a>
+				     					<a href="<?=$controller_alias;?>/edit_tag/<?=$item->id;?>" class="btn btn-mini"><i class="icon-edit"></i> Edit</a>
 				     					<a href="<?=$controller_alias;?>/destroy_tag/<?=$item->id;?>" class="btn btn-danger btn-mini" data-action="confirm"><i class="icon-remove icon-white"></i> Delete</a>
 		     						</div>
 		     					</div>
@@ -40,9 +40,9 @@
 	     		</tbody>
 	     	</table>
 	    <?php else: ?>
-	    	<p>No Tags. <a  class="btn btn-primary" href="<?=$controller_alias;?>/create_tag">Create Tag</a></p>
+	    	<p>No Tags.</p>
+	    	<p><a  class="btn btn-primary" href="<?=$controller_alias;?>/create_tag">Create Tag</a></p>
      	<?php endif; ?>
-
     </div>
 </div>
 @endsection

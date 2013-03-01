@@ -23,40 +23,103 @@ class Photo extends Eloquent {
 
 	public static function store($id = FALSE, $args = array())
 	{
-		if ($id && !empty($args['photo']) && $args['photo']['error'] == 0) {
+		$errors = array();
+
+		if ($id && !empty($args['photo'])) {
 			$dimsBig = Config::get('Boojer::boojer.photo');
 			$dimsSmall = Config::get('Boojer::boojer.photo_small');
-				
-			$item = new Photo();
 
 			if (!is_dir($_SERVER['DOCUMENT_ROOT'] . '/uploads/albums')) {
 				mkdir($_SERVER['DOCUMENT_ROOT'] . '/uploads/albums');
 			}
 
-			$photo = uniqid('album' . $id . '-') . '.' . strtolower(File::extension(Input::file('photo.name')));
-			$photo_small = uniqid('album-thumb-' . $id . '-') . '.' . strtolower(File::extension(Input::file('photo.name')));
-			Input::upload('photo', $_SERVER['DOCUMENT_ROOT'] . '/uploads/albums', $photo);
+			$images = $args['photo'];
+			$photos = array();
 
-			$item->name = $photo;
-			$item->caption = !empty($args['caption']) ? $args['caption'] : '';
-			$item->path = '/uploads/albums/' . $photo;
-			$item->thumb_path = '/uploads/albums/' . $photo_small;
-			$item->save();
+			foreach ($images as $key=>$value) {
+				foreach ($value as $k=>$v) {
+					$photos[$k][$key] = $v;
+				}
+			}
 
-			$affected = DB::table('album_photo')->insert(array(
-				'photo_id' => $item->id,
-				'album_id' => $id,
-			));
+			foreach ($photos as $key=>$photo_raw) {
+				$item = new Photo();
 
-			Photo::resize_photo($photo, $photo, $dimsBig['width'] , $dimsBig['height'], $dimsBig['resize']);
-			Photo::resize_photo($photo, $photo_small, $dimsSmall['width'] , $dimsSmall['height'], $dimsSmall['resize']);
+				if (File::is(array('jpg','png','jpeg'), $photo_raw['tmp_name'])) {
 
-			$newDim = getimagesize($_SERVER['DOCUMENT_ROOT'] . $item->path);
-			$item->width = $newDim[0];
-			$item->height = $newDim[1];
-			$item->save();
+					$ext = File::extension($photo_raw['name']);
+					
+					$photo = uniqid('album' . $id . '-') . '.' . $ext;
+					$photo_small = uniqid('album-thumb-' . $id . '-') . '.' . $ext;
+					
+					$test = File::put($_SERVER['DOCUMENT_ROOT'] . '/uploads/albums/' . $photo, File::get($photo_raw['tmp_name']));
+					if ($test > 0) {
+						$item->album_id = $id;
+						$item->name = $photo;
+						$item->caption = !empty($args['caption']) ? $args['caption'] : '';
+						$item->path = '/uploads/albums/' . $photo;
+						$item->thumb_path = '/uploads/albums/' . $photo_small;
+						$item->save();
 
-			return TRUE;
+						Photo::resize_photo($photo, $photo, $dimsBig['width'] , $dimsBig['height'], $dimsBig['resize']);
+						Photo::resize_photo($photo, $photo_small, $dimsSmall['width'] , $dimsSmall['height'], $dimsSmall['resize']);
+
+						$newDim = getimagesize($_SERVER['DOCUMENT_ROOT'] . $item->path);
+						$item->width = $newDim[0];
+						$item->height = $newDim[1];
+						$item->save();
+					} else {
+						$errors[] = 'Error uploading the file named ' . $photo_raw['name'];
+					}
+				} else {
+					$errors[] = 'File type not accepted for the file named ' . $photo_raw['name'];
+				}
+			}
+		} else {
+			$errors[] = 'No files to upload';
+		}
+
+		return $errors;
+	}
+
+	public static function update_tags($id = FALSE, $args = array())
+	{
+		if ($id) {
+			$item = Photo::with('tags')->find($id);
+			if ($item) {
+
+				$date = new \DateTime;
+
+				if (!empty($item->tags)) {
+					foreach ($item->tags as $tag) {
+						$key = array_search($tag->id, $args['tags']);
+						if ($key === FALSE) {
+							DB::table('boojer_photo')
+								->where('photo_id', '=', $item->id)
+								->where('boojer_id', '=', $tag->id)
+								->delete()
+							;
+						} else {
+							unset($args['tags'][$key]);
+						}
+					}
+				}
+
+				if (!empty($args['tags'])) {
+					foreach ($args['tags'] as $tag) {
+						if (!empty($tag)) {
+							DB::table('boojer_photo')->insert(array(
+								'photo_id' => $item->id,
+								'boojer_id' => $tag,
+								'updated_at' => $date,
+								'created_at' => $date,
+							));
+						}
+					}
+				}
+
+				return TRUE;
+			}
 		}
 
 		return FALSE;
@@ -78,13 +141,15 @@ class Photo extends Eloquent {
 		return FALSE;
 	}
 
-
 	public static function destroy($id = FALSE)
 	{
 		if ($id) {
 			$item = Photo::find($id);
 			if ($item) {
-				$affected = DB::table('album_photo')->where('photo_id', '=', $item->id)->delete();
+				
+				// remove tags on photo
+				DB::table('boojer_photo')->where('photo_id', '=', $item->id)->delete();
+
 				@unlink($_SERVER['DOCUMENT_ROOT'] . $item->path);
 				@unlink($_SERVER['DOCUMENT_ROOT'] . $item->thumb_path);
 				$item->delete();
@@ -95,4 +160,8 @@ class Photo extends Eloquent {
 		return FALSE;
 	}
 
+	public function tags()
+	{
+		return $this->has_many_and_belongs_to('Boojer\Models\Boojer');
+	}
 }

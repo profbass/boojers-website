@@ -38,6 +38,20 @@
 					</div>
 				</div>
 
+				<div class="control-group{{ isset($errors) && $errors->has('visible') ? ' error' : '' }}">
+					<label class="control-label">Album Visibility *</label>
+					<div class="controls">
+						<label class="radio">
+							<?=Form::radio('visible', 1, true); ?>
+							Album is visible
+						</label>
+						<label class="radio">
+							<?=Form::radio('visible', 0, false); ?>
+							Album is hidden
+						</label>
+					</div>
+				</div>				
+
 				<div class="form-actions">
 					<button type="submit" name="submit" value="1" class="btn btn-success btn-large">Create</button>
 					<a href="<?=$controller_alias;?>" class="btn btn-warning">Cancel</a>

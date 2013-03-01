@@ -18,6 +18,7 @@
      			<thead>
      				<tr>
      					<th>Name</th>
+     					<th>Visible</th>
      					<th>Date Created</th>
      					<th class="align-right">Actions</th>
      				</tr>
@@ -26,6 +27,7 @@
 		     		<?php foreach($albums as $item): ?>
 		     			<tr>
 		     				<td><?=$item->name;?></td>
+		     				<td><? if ($item->visible == 1) echo 'Visible'; else echo 'Hidden'; ?></td>
 		     				<td><?=date('F j, Y', strtotime($item->created_at));?></td>
 		     				<td>
 								<div class="btn-toolbar">

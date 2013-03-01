@@ -2,6 +2,7 @@
 
 use Boojer\Models\Album as Album;
 use Boojer\Models\Photo as Photo;
+use Boojer\Models\Boojer as Boojer;
 
 class Boojer_Admin_Album_Controller extends Admin_Base_Controller {
     public $restful = true;
@@ -38,6 +39,7 @@ class Boojer_Admin_Album_Controller extends Admin_Base_Controller {
 	public function get_edit_photos($id = FALSE)
 	{
 		$this->view_arguments['album'] = Album::get_by_id_with_photos($id);
+		$this->view_arguments['boojers'] = Boojer::get_for_admin();
 		return View::make('boojer::admin.albums.edit_photos', $this->view_arguments);
 	}
 
@@ -86,16 +88,12 @@ class Boojer_Admin_Album_Controller extends Admin_Base_Controller {
 
 	public function post_store_photo($id = FALSE)
 	{
-		$input = Input::all();
-		$max_kb = Config::get('Boojer::boojer.photo_max_kb');
-		$rules = array(
-			'photo' => 'required|mimes:jpg,gif,png,jpeg|max:' . $max_kb,
-		);
-
 		if ($id) {
-			$test = Photo::store($id, $input);
-			if ($test) {
+			$test = Photo::store($id, Input::all());
+			if (empty($test)) {
 				return Redirect::Back()->with('success_message', 'Photo Added.');
+			} else {
+				return Redirect::back()->with('error_message', implode('<br>', $test));
 			}
 		}
 
@@ -108,6 +106,16 @@ class Boojer_Admin_Album_Controller extends Admin_Base_Controller {
 
 		if ($id) {
 			$test = Photo::update($id, $input);
+		}
+		return '';
+	}
+
+	public function post_update_photo_tags($id = FALSE)
+	{
+		$input = Input::all();
+
+		if ($id) {
+			$test = Photo::update_tags($id, $input);
 		}
 		return '';
 	}

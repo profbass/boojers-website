@@ -1,6 +1,7 @@
 <?php
 
 namespace Boojer\Models;
+use Boojer\Models\Photo as Photo;
 use \Laravel\Database\Eloquent\Model as Eloquent;
 use \Laravel\Database as DB;
 use \Laravel\Cache as Cache;
@@ -26,6 +27,7 @@ class Album extends Eloquent {
 		$item = new Album;
 		if ($item) {
 			$item->name = $args['name'];
+			$item->visible = isset($args['visible']) && $args['visible'] == 0 ? 0 : 1;
 			$item->slug = $item->make_slug($args['name']);
 			$item->description = !empty($args['description']) ? $args['description']: '';
 			$item->save();
@@ -40,6 +42,7 @@ class Album extends Eloquent {
 			$item = Album::find($id);
 			if ($item) {
 				$item->name = $args['name'];
+				$item->visible = isset($args['visible']) && $args['visible'] == 0 ? 0 : 1;
 				$item->slug = $item->make_slug($args['name']);
 				$item->description = !empty($args['description']) ? $args['description']: '';
 				$item->save();
@@ -63,10 +66,8 @@ class Album extends Eloquent {
 	public static function get_by_id_with_photos($id = FALSE)
 	{
 		if ($id) {
-			$item = Album::with('photos')->find($id);
-			if ($item) {
-				return $item;
-			}
+			$item = Album::with(array('photos', 'photos.tags'))->find($id);
+			return $item;
 		}
 		return FALSE;
 	}	
@@ -74,8 +75,11 @@ class Album extends Eloquent {
 	public static function delete_item($id = FALSE)
 	{
 		if ($id) {
-			$item = Album::find($id);
+			$item = Album::with(array('photos'))->find($id);
 			if ($item) {
+				foreach ($item->photos as $photo) {
+					Photo::destroy($photo->id);
+				}
 				$item->delete();
 				return TRUE;
 			}
@@ -85,7 +89,6 @@ class Album extends Eloquent {
 
 	public function photos()
 	{
-		return $this->has_many_and_belongs_to('Boojer\Models\Photo');
+		return $this->has_many('Boojer\Models\Photo');
 	}
-
 }

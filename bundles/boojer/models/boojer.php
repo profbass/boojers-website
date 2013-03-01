@@ -43,6 +43,7 @@ class Boojer extends Eloquent {
 		if ($id) {
 			$item = Boojer::with('tags')->find($id);
 			if ($item) {
+				$date = new \DateTime;
 				$item->first_name = $args['first_name'];
 				$item->last_name = $args['last_name'];
 				$item->email = $args['email'];
@@ -74,6 +75,8 @@ class Boojer extends Eloquent {
 							DB::table('boojer_boojtag')->insert(array(
 								'boojer_id' => $item->id,
 								'boojtag_id' => $tag,
+								'updated_at' => $date,
+								'created_at' => $date,
 							));
 						}
 					}
@@ -156,7 +159,12 @@ class Boojer extends Eloquent {
 		if ($id) {
 			$item = Boojer::find($id);
 			if ($item) {
-				// DB::table('group_user')->where('boojer_id', '=', $user->id)->delete();
+				// remove photo tags of user
+				DB::table('boojer_photo')->where('boojer_id', '=', $item->id)->delete();
+				
+				// remove boojtags of user
+				DB::table('boojer_boojtag')->where('boojer_id', '=', $item->id)->delete();
+
 				$item->delete();
 				return TRUE;
 			}

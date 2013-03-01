@@ -12,6 +12,7 @@ class Boojer_Create_Boojer {
 		// Create photo table
 		Schema::create('photos', function($table) {
 			$table->increments('id')->unsigned();
+			$table->integer('album_id')->unsigned();
 			$table->string('name')->nullable();
 			$table->string('caption')->nullable();
 			$table->string('path')->unique();
@@ -28,15 +29,8 @@ class Boojer_Create_Boojer {
 			$table->string('slug')->unique();
 			$table->string('name')->unique();
 			$table->text('description')->nullable();
+			$table->integer('visible')->unsigned()->default(1);
 			$table->integer('votes')->unsigned()->default(0);
-			$table->timestamps();
-		});
-
-		// Create album_photo table
-		Schema::create('album_photo', function($table) {
-			$table->increments('id')->unsigned();
-			$table->integer('photo_id')->unsigned();
-			$table->integer('album_id')->unsigned();
 			$table->timestamps();
 		});
 
@@ -58,7 +52,7 @@ class Boojer_Create_Boojer {
 		});
 
 		// Create photo_boojer table
-		Schema::create('photo_boojer', function($table) {
+		Schema::create('boojer_photo', function($table) {
 			$table->increments('id')->unsigned();
 			$table->integer('photo_id')->unsigned();
 			$table->integer('boojer_id')->unsigned();

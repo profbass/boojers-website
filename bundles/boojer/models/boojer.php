@@ -31,7 +31,22 @@ class Boojer extends Eloquent {
 			$item->fun_bio = !empty($args['fun_bio']) ? $args['fun_bio']: '';
 			$item->save();
 
+			$date = new \DateTime;
+
 			Boojer::update_photo($item->id, $args);
+
+			if (!empty($args['tags'])) {
+				foreach ($args['tags'] as $tag) {
+					if (!empty($tag)) {
+						DB::table('boojer_boojtag')->insert(array(
+							'boojer_id' => $item->id,
+							'boojtag_id' => $tag,
+							'updated_at' => $date,
+							'created_at' => $date,
+						));
+					}
+				}
+			}
 
 			return $item->id;
 		}
@@ -92,6 +107,17 @@ class Boojer extends Eloquent {
 	{
 		if ($id) {
 			$item = Boojer::with('tags')->find($id);
+			if ($item) {
+				return $item;
+			}
+		}
+		return FALSE;
+	}
+
+	public static function get_for_bio($id = FALSE)
+	{
+		if ($id) {
+			$item = Boojer::with(array('tags', 'photos'))->find($id);
 			if ($item) {
 				return $item;
 			}
@@ -182,4 +208,10 @@ class Boojer extends Eloquent {
 	{
 		return $this->has_many_and_belongs_to('Boojer\Models\Boojtag');
 	}
+
+	public function photos()
+	{
+		return $this->has_many_and_belongs_to('Boojer\Models\Photo');
+	}
+
 }

@@ -46,7 +46,7 @@ class Boojer_Admin_Boojer_Controller extends Admin_Base_Controller {
 		$rules = array(
 			'first_name' => 'required',
 			'last_name' => 'required',
-			'email' => 'required|email',
+			'email' => 'required|email|unique:boojers,email',			
 			'title' => 'required',
 			'professional_photo' => 'mimes:jpg,gif,png,jpeg|max:' . $max_kb,
 			'fun_photo' => 'mimes:jpg,gif,png,jpeg|max:' . $max_kb,
@@ -74,7 +74,7 @@ class Boojer_Admin_Boojer_Controller extends Admin_Base_Controller {
 			$rules = array(
 				'first_name' => 'required',
 				'last_name' => 'required',
-				'email' => 'required|email',
+				'email' => 'required|email|unique:boojers,email,' . $id,
 				'title' => 'required',
 				'professional_photo' => 'mimes:jpg,gif,png,jpeg|max:' . $max_kb,
 				'fun_photo' => 'mimes:jpg,gif,png,jpeg|max:' . $max_kb,
@@ -95,7 +95,6 @@ class Boojer_Admin_Boojer_Controller extends Admin_Base_Controller {
 		}
 		return Redirect::back()->with_input()->with('error_message', 'Error Occured');
 	}
-
 
 	public function get_destroy($id = false) 
 	{

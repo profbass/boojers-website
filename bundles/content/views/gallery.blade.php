@@ -61,7 +61,6 @@
 @endsection
 
 @section('scripts')
-	<script src="/js/fancybox/jquery.fancybox.js"></script>
     <script>
     	jQuery(document).ready(function($) {
     		$('a.gallery-link').fancybox({

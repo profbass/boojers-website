@@ -20,12 +20,9 @@ module.exports = function(grunt) {
       dist: {
         src: [
           'public/js/lib/jquery.js',
-          'public/js/lib/mustache.js',
-          'public/js/twitter-bootstrap/bootstrap-collapse.js', 
-          'public/js/twitter-bootstrap/bootstrap-carousel.js',
-          'public/js/twitter-bootstrap/bootstrap-transition.js', 
-          'public/js/hover_intent.js', 
-          'public/js/jquery.menu.js', 
+          'public/js/lib/jquery.easing.1.3.js',
+          'public/js/fancybox/jquery.fancybox.js',
+          'public/js/jquery.quicksand.js',
           'public/js/application.js'
         ],
         dest: 'public/dist/app.min.js'

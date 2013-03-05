@@ -95,6 +95,32 @@ class Content_Home_Controller extends Content_Base_Controller {
 		return View::make('content::boojers', $this->view_arguments);
     }
 
+    public function get_show_boojer($id = FALSE)
+    {
+		$user = Boojer\Models\Boojer::get_for_bio($id);
+		
+		if (!$user) {
+			Response::error('404');
+		}
+
+		$this->view_arguments['boojer'] = $user;
+
+		return View::make('content::view_boojer', $this->view_arguments);
+    }
+
+    public function post_show_boojer($id = FALSE)
+    {
+		$user = Boojer\Models\Boojer::get_for_bio($id);
+		
+		if (!$user) {
+			Response::error('404');
+		}
+
+		$this->view_arguments['boojer'] = $user;
+
+		return View::make('content::view_boojer', $this->view_arguments);
+    }   
+
     public function get_show_gallery($slug = FALSE)
     {
 		$page = Boojer\Models\Album::get_album_by_slug($slug);

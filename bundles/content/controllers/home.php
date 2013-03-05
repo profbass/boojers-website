@@ -31,6 +31,85 @@ class Content_Home_Controller extends Content_Base_Controller {
 		return View::make('content::home', $this->view_arguments);
     }
 
+    public function get_gallery()
+    {
+		$page = Menuitem::get_page_by_uri(Request::uri());
+		
+		if (!$page) {
+			return Response::error('404');
+		}
+
+		$this->view_arguments['page_data'] = $page;
+
+		$this->view_arguments['galleries'] = Boojer\Models\Album::get_albums();
+
+		return View::make('content::gallery', $this->view_arguments);
+    }
+
+    public function get_tumbler()
+    {
+		$page = Menuitem::get_page_by_uri(Request::uri());
+		
+		if (!$page) {
+			return Response::error('404');
+		}
+
+		$this->view_arguments['page_data'] = $page;
+
+		return View::make('content::tumbler', $this->view_arguments);
+    }
+
+    public function get_boojers()
+    {
+		$page = Menuitem::get_page_by_uri(Request::uri());
+		
+		if (!$page) {
+			return Response::error('404');
+		}
+
+		$this->view_arguments['page_data'] = $page;
+		$fun_tags = array();
+		$pro_tags = array();
+
+		$boojers = Boojer\Models\Boojer::get_boojers();
+		if (!empty($boojers)) {
+			foreach ($boojers as $boojer) {
+				foreach ($boojer->tags as $tag) {
+					if ($tag->type === 'professional') {
+						$pro_tags[$tag->id] = $tag->name;
+					}
+					if ($tag->type === 'fun') {
+						$fun_tags[$tag->id] = $tag->name;
+					}
+				}
+			}
+		}
+
+		asort($fun_tags);
+		asort($pro_tags);
+
+		$this->view_arguments['fun_tags'] = $fun_tags;
+		$this->view_arguments['pro_tags'] = $pro_tags;
+		$this->view_arguments['boojers'] = $boojers;
+
+		return View::make('content::boojers', $this->view_arguments);
+    }
+
+    public function get_show_gallery($slug = FALSE)
+    {
+		$page = Boojer\Models\Album::get_album_by_slug($slug);
+
+		if (!$page) {
+			return Response::error('404');
+		}
+
+		$this->view_arguments['page_data'] = $page;
+
+		return View::make('content::view_gallery', $this->view_arguments);
+    }
+
+
+
     public function get_contact()
     {
 		$page = Menuitem::get_page_by_uri(Request::uri());

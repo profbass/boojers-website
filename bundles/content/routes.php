@@ -3,14 +3,35 @@ Route::controller(array(
 	'content::home',
 ));
 
-/* admin content base route */
+
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/gallery', 'content::home@gallery');
+Route::get('/gallery/(:any)', 'content::home@show_gallery');
+
+Route::get('/boojers', 'content::home@boojers');
+Route::get('/boojers/(:any)', 'content::home@show_boojer');
+
+Route::get('/booj-at-work', 'content::home@tumbler');
+
+Route::get('/contact', 'content::home@contact');
+Route::post('/contact', array('before' => 'csrf', 'uses' => 'content::home@contact'));
+
+Route::get('/', 'content::home@homepage');
+Route::get('/(:any)', 'content::home@index');
+
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
 // Route::get('admin/content', 'content::admin.home@index');
 Route::get('admin/content', 'content::admin.content@index');
-
-/* admin content routes */
 Route::get('admin/content/menu', 'content::admin.content@index');
-
-
 Route::get('admin/content/edit/(:num)', 'content::admin.content@edit');
 Route::get('admin/content/show_page/(:num)', 'content::admin.content@show_page');
 Route::get('admin/content/hide_page/(:num)', 'content::admin.content@hide_page');

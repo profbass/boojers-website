@@ -23,18 +23,11 @@
 @section('content')
 <div class="row-fluid">
     <div class="span12 relative" id="boojer-homepage">
+        <h1 class="large-heading">Life at booj</h1>
         @if (!empty($page_data->cmspage->content))
             {{ $page_data->cmspage->content }}
         @endif
 
-        <div id="boojer-home-circle">
-        	<div>
-				<p class="cabin title">\bu(o)jh-er\</p>
-				<p class="cabin">NOUN</p>
-				<p class="cabin">1. &nbsp;An indavidual marked by an independent, creative spirit and by readiness to act.</p>
-				<p class="cabin">2. &nbsp;Someone so lucky enough to  work for Booj Enterprises.</p>
-			</div>
-        </div>
     </div>
 </div>
 @endsection

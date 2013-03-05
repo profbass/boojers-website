@@ -89,9 +89,9 @@ class Boojer_Create_Boojer {
 
 		Schema::drop('albums');
 
-		Schema::drop('album_photo');
+		Schema::drop('boojers');
 
-		Schema::drop('photo_boojer');
+		Schema::drop('boojer_photo');
 
 		Schema::drop('boojtags');
 

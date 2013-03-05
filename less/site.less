@@ -1,3 +1,10 @@
+body {
+     background: #303030;
+}
+.main-container {
+     background: url(/img/gray-triangle.png) 0 0 no-repeat @white;
+}
+
 #site-header {
      //http://jsfiddle.net/HRWqq/
      background: url(/img/boojers-header-logo.png) no-repeat 0 0 @grayDarker;
@@ -32,3 +39,124 @@
           }
      }
 }
+
+#boojer-home-circle {
+     background: url(/img/boojer-circle.png) no-repeat 0 0 transparent;
+     position: absolute;
+     display: block;
+     top: 155px;
+     right: 155px;
+     width: 372px;
+     height: 372px;
+     .clearfix();
+     > div {
+          margin: 144px 0 0 90px;
+          width: 218px;
+          float: left;
+     }
+     p {
+          color: @white;
+          font-size: 14px;
+          margin: 0 0 7px 0;
+     }
+     p.title {
+          font-size: 18px;
+     }
+}
+
+#boojer-gallery {
+     .thumbnails {
+          margin-left: -30px;
+          li {
+               width: 172px;
+               float: left;
+               margin: 0 0 30px 30px;              
+               background: @grayMedium;
+               img {
+                    margin: 1px;
+               }
+               > div {
+                    margin: 20px;
+               }
+               h3 {
+                    color: @darkRed;
+                    font-size: 18px;
+                    line-height: normal;
+                    margin: 0;
+               }
+               p {
+                    font-size: 12px;
+                    margin: 0;
+                    color: @black;
+                    font-style: italic;
+                    line-height: normal;
+               }
+          }
+     }
+}
+
+#boojers-page {
+     .boojers-nav {
+          button {
+               width: 50%;
+               float: left;
+               background: @red;
+               display: block;
+               padding: 25px 0;
+               border: none;
+               font-size: 24px;
+               color: @white;
+               span {
+                    display: block;
+                    padding: 0 65px;
+               }
+               &.active {
+                    .box-shadow(~"inset 0 0 16px 2px rgba(0,0,0,.75)");
+               }
+          }
+     }
+     .boojer-tab {
+          display: none;
+          .thumbnails {
+               margin-left: -30px;
+               li {
+                    width: 170px;
+                    float: left;
+                    margin: 0 0 30px 30px;              
+                    background: @grayMedium;
+                    img {
+                         margin: 1px;
+                    }
+                    > div {
+                         margin: 20px;
+                    }
+                    h3 {
+                         color: @darkRed;
+                         font-size: 18px;
+                         line-height: normal;
+                         margin: 0;
+                    }
+                    p {
+                         font-size: 12px;
+                         margin: 0;
+                         color: @black;
+                         font-style: italic;
+                         line-height: normal;
+                    }
+               }
+          }
+          &.active {
+               display: block;
+          }
+     }
+}
+
+#footer-top {
+     background: #171717;
+     padding: 10px 0;
+}
+#footer-bottom {
+     background: #303030;
+     padding: 50px 0 20px 0;
+}
+

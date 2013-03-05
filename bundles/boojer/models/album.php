@@ -22,6 +22,23 @@ class Album extends Eloquent {
 		return $data;
 	}
 
+	public static function get_albums($count = 12)
+	{
+		$data = Album::with('photos')->order_by('created_at', 'DESC')->paginate($count);
+		return $data;
+	}
+
+	public static function get_album_by_slug($slug = FALSE)
+	{
+		$data = FALSE;
+
+		if ($slug) {
+			$data = Album::with('photos')->where('slug', '=', $slug)->get();
+		}
+
+		return $data;
+	}	
+
 	public static function create_item($args = array())
 	{
 		$item = new Album;

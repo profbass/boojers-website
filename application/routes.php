@@ -13,11 +13,6 @@ Route::get('/countdown', function()
 |--------------------------------------------------------------------------
 */
 
-Route::get('/contact', 'content::home@contact');
-Route::post('/contact', array('before' => 'csrf', 'uses' => 'content::home@contact'));
-
-Route::get('/', 'content::home@homepage');
-Route::get('/(:any)', 'content::home@index');
 
 
 /*

@@ -99,6 +99,12 @@ class Boojer extends Eloquent {
 		return FALSE;
 	}
 
+	public static function get_boojers()
+	{
+		$data = Boojer::with('tags')->get();
+		return $data;
+	}
+
 	public static function resize_photo($src, $save, $width, $height, $resize = 'crop')
 	{
 		Resizer::open( $_SERVER['DOCUMENT_ROOT'] . '/uploads/boojers/' . $src )

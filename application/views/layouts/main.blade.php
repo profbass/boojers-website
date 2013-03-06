@@ -35,7 +35,8 @@
                     @endif
                 </ul>
             </div>
-        </header>
+        </div>
+    </header>
         <div class="main-container" style="min-height: 500px;">
             <div class="container-fluid">
                 @yield('content')

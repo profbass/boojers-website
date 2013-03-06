@@ -37,7 +37,7 @@
 	        		<li class="pull-left"><span class="show-taged all-label active" data-type="pro" data-id="all">All</span></li>
 	        		<? if (!empty($pro_tags)): ?>
 			        	<? foreach ($pro_tags as $tag_id => $tag_name): ?>
-			        		<li class="pull-left"><span class="show-taged <?=strtolower(str_replace(' ', '-', $tag_name));?>-label" data-type="pro" data-id="<?=strtolower(str_replace(' ', '-', $tag_name));?>"><?=$tag_name;?></li>
+			        		<li class="pull-left"><span class="show-taged <?=strtolower(str_replace(' ', '-', $tag_name));?>-label" data-type="pro" data-id="<?=strtolower(str_replace(' ', '-', $tag_name));?>"><?=$tag_name;?></span></li>
 			        	<? endforeach; ?>
 			        <? endif; ?>
 			    </ul>
@@ -60,7 +60,7 @@
 	        		<li class="pull-left"><span class="show-taged all-label active" data-type="fun" data-id="all">All</span></li>
 	        		<? if (!empty($fun_tags)): ?>
 			        	<? foreach ($fun_tags as $tag_id => $tag_name): ?>
-			        		<li class="pull-left"><span class="show-taged <?=strtolower(str_replace(' ', '-', $tag_name));?>-label" data-type="fun" data-id="<?=strtolower(str_replace(' ', '-', $tag_name));?>"><?=$tag_name;?></li>
+			        		<li class="pull-left"><span class="show-taged <?=strtolower(str_replace(' ', '-', $tag_name));?>-label" data-type="fun" data-id="<?=strtolower(str_replace(' ', '-', $tag_name));?>"><?=$tag_name;?></span></li>
 			        	<? endforeach; ?>
 			        <? endif; ?>
 			    </ul>
@@ -120,7 +120,11 @@
 
 			var hideBio = function() {
 				if ("onhashchange" in window) {
-					window.removeEventListener("hashchange", hideBio, false);
+					try {
+						window.removeEventListener("hashchange", hideBio, false);
+					} catch (e) {
+
+					}
 				}
 				window.location.hash = '';
 				bio.fadeOut(600, function() {
@@ -166,13 +170,17 @@
 				window.location.hash = '#viewing-bio';
 				bio.html('<div class="container-fluid"><p class="text-center">loading...</p></div>').css({
 					top: header.height(),
-					minHeight: BODY.height(),
+					minHeight: BODY.height()
 				}).fadeIn(600);
 				$.post($(this).attr('href'), function(data) {
 					bio.html(data);
 					bio.find('.fancybox').fancybox();
 					if ("onhashchange" in window) {
-						window.addEventListener("hashchange", hideBio, false);
+						try {
+							window.addEventListener("hashchange", hideBio, false);
+						} catch(e) {
+
+						}
 					}	
 				});
 			});

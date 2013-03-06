@@ -29,7 +29,7 @@
 						<ul class="unstyled bio-tag-list margin-top-30">
 							<? foreach($boojer->tags as $tag): ?>
 								<? if ($tag->type === 'professional'): ?>
-						        	<li><span class="<?=strtolower(str_replace(' ', '-', $tag->name));?>-label"><?=$tag->name;?></li>
+						        	<li><span class="<?=strtolower(str_replace(' ', '-', $tag->name));?>-label"><?=$tag->name;?></span></li>
 						        <? endif; ?>
 					        <? endforeach; ?>
 					    </ul>
@@ -41,7 +41,7 @@
 						<ul class="unstyled bio-tag-list margin-top-30">
 							<? foreach($boojer->tags as $tag): ?>
 								<? if ($tag->type === 'fun'): ?>
-						        	<li><span class="<?=strtolower(str_replace(' ', '-', $tag->name));?>-label"><?=$tag->name;?></li>
+						        	<li><span class="<?=strtolower(str_replace(' ', '-', $tag->name));?>-label"><?=$tag->name;?></span></li>
 						        <? endif; ?>
 					        <? endforeach; ?>
 					    </ul>

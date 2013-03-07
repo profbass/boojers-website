@@ -21,15 +21,19 @@
 @endsection
 
 @section('content')
-<div class="row-fluid">
-    <div class="span12 relative" id="boojer-homepage">
-        <h1 class="large-heading">Life at booj</h1>
-        @if (!empty($page_data->cmspage->content))
-            {{ $page_data->cmspage->content }}
-        @endif
-
-    </div>
+<div class="main-container">
+	<div class="container-fluid">
+		<div class="row-fluid">
+		    <div class="span12 relative" id="boojer-homepage">
+		        <h1 class="large-heading">watercooler</h1>
+	        	@if (!empty($page_data->cmspage->content))
+		            <div class="content-heading">{{ $page_data->cmspage->content }}</div>
+		        @endif
+		    </div>
+		</div>
+	</div>
 </div>
+@include('layouts.footer')
 @endsection
 
 @if (!empty($page_data->cmspage->styles))

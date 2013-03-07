@@ -38,7 +38,7 @@ class Boojer_Admin_Album_Controller extends Admin_Base_Controller {
 
 	public function get_edit_photos($id = FALSE)
 	{
-		$this->view_arguments['album'] = Album::get_by_id_with_photos($id);
+		$this->view_arguments['album'] = Album::get_by_id_with_photos_and_tags($id);
 		$this->view_arguments['boojers'] = Boojer::get_for_admin();
 		return View::make('boojer::admin.albums.edit_photos', $this->view_arguments);
 	}
@@ -108,6 +108,46 @@ class Boojer_Admin_Album_Controller extends Admin_Base_Controller {
 			$test = Photo::update($id, $input);
 		}
 		return '';
+	}
+
+	public function post_vote_up_photo($id = FALSE)
+	{
+		$count = 0;
+
+		if ($id) {
+			$count = Photo::vote($id, 1);
+		}
+		return $count; 
+	}
+
+	public function get_vote_up_photo($id = FALSE)
+	{
+		$count = 0;
+
+		if ($id) {
+			$count = Photo::vote($id, 1);
+		}
+		return $count; 
+	}
+
+	public function post_vote_down_photo($id = FALSE)
+	{
+		$count = 0;
+
+		if ($id) {
+			$count = Photo::vote($id, -1);
+		}
+		return $count; 
+	}	
+
+	public function get_vote_down_photo($id = FALSE)
+	{
+		$count = 0;
+
+		if ($id) {
+			$count = Photo::vote($id, -1);
+		}
+		return $count; 
 	}
 
 	public function post_update_photo_tags($id = FALSE)

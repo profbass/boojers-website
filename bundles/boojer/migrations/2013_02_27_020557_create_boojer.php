@@ -17,6 +17,7 @@ class Boojer_Create_Boojer {
 			$table->string('caption')->nullable();
 			$table->string('path')->unique();
 			$table->string('thumb_path')->unique();
+			$table->string('thumb_alt_path')->unique();
 			$table->integer('width')->unsigned()->nullable();
 			$table->integer('height')->unsigned()->nullable();
 			$table->integer('votes')->unsigned()->default(0);

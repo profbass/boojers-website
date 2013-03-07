@@ -30,17 +30,22 @@
 	     		<?php foreach($album->photos as $item): ?>
 	     			<li class="span2 photo-manager">
 	     				<div class="thumbnail">
+	     					<img src="<?=$item->thumb_path;?>" alt="">
+
 							<div class="dropdown">
 								<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Actions <b class="caret"></b></a>
 								<ul class="dropdown-menu" role="menu">
-									<li role=menuitem><a href="#" data-target="#tag-form-<?=$item->id;?>" data-action="edit-photo-tags"><i class="icon-tags"></i> Tag Photo</a></li>
-									<li role=menuitem><a href="#" data-target="#caption-form-<?=$item->id;?>" data-action="edit-photo-caption"><i class="icon-comment"></i> Edit Caption</a></li>
-									<li role=menuitem><a href="<?=$item->path;?>" data-action="view-photo" target="_blank"><i class="icon-eye-open"></i> View</a></li>
-									<li role=menuitem class="divider"></li>
-									<li role=menuitem><a href="<?=$controller_alias . '/destroy_album_photo/' . $item->id; ?>" data-action="delete-photo"><i class="icon-remove"></i> Delete Photo</a></li>
+									<li role="menuitem"><a href="#" data-target="#tag-form-<?=$item->id;?>" data-action="edit-photo-tags"><i class="icon-tags"></i> Tag Photo</a></li>
+									<li role="menuitem"><a href="#" data-target="#caption-form-<?=$item->id;?>" data-action="edit-photo-caption"><i class="icon-comment"></i> Edit Caption</a></li>
+									<li role="menuitem"><a href="<?=$item->path;?>" data-action="view-photo" target="_blank"><i class="icon-eye-open"></i> View</a></li>
+									<li role="menuitem"><a href="<?=$controller_alias . '/vote_up_album_photo/' . $item->id; ?>" data-action="vote-photo" target="_blank"><i class="icon-thumbs-up"></i> Vote +</a></li>
+									<li role="menuitem"><a href="<?=$controller_alias . '/vote_down_album_photo/' . $item->id; ?>" data-action="vote-photo" target="_blank"><i class="icon-thumbs-down"></i> Vote -</a></li>
+									<li role="menuitem" class="divider"></li>
+									<li role="menuitem"><a href="<?=$controller_alias . '/destroy_album_photo/' . $item->id; ?>" data-action="delete-photo"><i class="icon-remove"></i> Delete Photo</a></li>
 								</ul>
 							</div>
-	     					<img src="<?=$item->thumb_path;?>" alt="">
+							<span class="vote-count"><?=$item->votes; ?> votes</span>
+	     					
 
 							<div class="hidden">
 								<div id="tag-form-<?=$item->id;?>" style="width:400px;">
@@ -139,6 +144,16 @@ jQuery(document).ready(function($) {
 					});
 				});
 			}
+		});
+	});
+
+	doc.on('click', 'a[data-action="vote-photo"]', function(e) {
+		e.preventDefault();
+		var el = $(this);
+
+		$.post(el.attr('href'), {}, function(data) {
+			console.log(data);
+			el.parents('.thumbnail').find('.vote-count').html(data + ' Votes');
 		});
 	});
 

@@ -21,13 +21,18 @@
 @endsection
 
 @section('content')
-<div class="row-fluid">
-    <div class="span12">
-        @if (!empty($page_data->cmspage->content))
-            {{ $page_data->cmspage->content }}
-        @endif
-    </div>
+<div class="main-container">
+	<div class="container-fluid">
+		<div class="row-fluid">
+		    <div class="span12">
+		        @if (!empty($page_data->cmspage->content))
+		            {{ $page_data->cmspage->content }}
+		        @endif
+		    </div>
+		</div>
+	</div>
 </div>
+@include('layouts.footer')
 @endsection
 
 @if (!empty($page_data->cmspage->styles))

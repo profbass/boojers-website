@@ -39,6 +39,17 @@ class Album extends Eloquent {
 		return $data;
 	}	
 
+	public static function get_album_by_id($id = FALSE)
+	{
+		$data = FALSE;
+
+		if ($id) {
+			$data = Album::with('photos')->find($id)->get();
+		}
+
+		return $data;
+	}	
+
 	public static function create_item($args = array())
 	{
 		$item = new Album;
@@ -80,7 +91,7 @@ class Album extends Eloquent {
 		return FALSE;
 	}
 
-	public static function get_by_id_with_photos($id = FALSE)
+	public static function get_by_id_with_photos_and_tags($id = FALSE)
 	{
 		if ($id) {
 			$item = Album::with(array('photos', 'photos.tags'))->find($id);

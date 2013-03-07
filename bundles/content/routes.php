@@ -11,12 +11,14 @@ Route::controller(array(
 */
 Route::get('/gallery', 'content::home@gallery');
 Route::get('/gallery/(:any)', 'content::home@show_gallery');
+Route::get('/get_gallery_json/(:num)', 'content::home@gallery_json');
+ROUTE::get('/get_home_images', 'content::home@home_images');
 
 Route::get('/boojers', 'content::home@boojers');
 Route::get('/boojers/(:any)', 'content::home@show_boojer');
 Route::post('/boojers/(:any)', 'content::home@show_boojer');
 
-Route::get('/life-at-booj', 'content::home@tumbler');
+Route::get('/watercooler', 'content::home@tumbler');
 
 Route::get('/contact', 'content::home@contact');
 Route::post('/contact', array('before' => 'csrf', 'uses' => 'content::home@contact'));

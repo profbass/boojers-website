@@ -28,6 +28,11 @@ Route::get('admin/boojer/destroy_album_photo/(:num)', 'boojer::admin.album@destr
 Route::post('admin/boojer/destroy_album_photo/(:num)', 'boojer::admin.album@destroy_photo');
 Route::post('admin/boojer/update_album_photo_caption/(:num)', 'boojer::admin.album@update_photo');
 Route::post('admin/boojer/update_album_photo_tags/(:num)', 'boojer::admin.album@update_photo_tags');
+Route::post('admin/boojer/vote_down_album_photo/(:num)', 'boojer::admin.album@vote_down_photo');
+Route::post('admin/boojer/vote_up_album_photo/(:num)', 'boojer::admin.album@vote_up_photo');
+Route::get('admin/boojer/vote_down_album_photo/(:num)', 'boojer::admin.album@vote_down_photo');
+Route::get('admin/boojer/vote_up_album_photo/(:num)', 'boojer::admin.album@vote_up_photo');
+
 
 
 Route::get('admin/boojer/tags', 'boojer::admin.boojtag@index');

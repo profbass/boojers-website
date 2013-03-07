@@ -18,6 +18,13 @@ class Content_Home_Controller extends Content_Base_Controller {
 		return View::make('content::index', $this->view_arguments);
     }
 
+    public function get_home_images()
+    {
+    	$data = Boojer\Models\Photo::get_popular_as_json(60);
+    	
+    	return Response::json($data);
+    }
+
     public function get_homepage()
     {
 		$home_page = Menuitem::get_page_by_uri('/');
@@ -44,6 +51,46 @@ class Content_Home_Controller extends Content_Base_Controller {
 		$this->view_arguments['galleries'] = Boojer\Models\Album::get_albums();
 
 		return View::make('content::gallery', $this->view_arguments);
+    }
+
+    public function get_gallery_json($id = FALSE) {
+    	$data = Boojer\Models\Album::get_by_id_with_photos_and_tags($id);
+    	
+    	$album['album'] = array();
+    	if (!empty($data)) {
+	    	$album['album']['name'] = $data->name;
+	    	$album['album']['description'] = $data->description;
+	    	$album['album']['votes'] = $data->votes;
+	    	$album['album']['created_at'] = $data->created_at;
+	    	$album['album']['slug'] = $data->slug;
+	    	$album['album']['id'] = $data->id;
+	    	$album['album']['photos'] = array();
+
+	    	if (!empty($data->photos)) {
+		    	foreach ($data->photos as $photo) {
+		    		$tags = array();
+		    		
+		    		if (!empty($photo->tags)) {
+			    		foreach ($photo->tags as $tag) {
+			    			$tags[] = array(
+			    				'name' => $tag->first_name . ' ' . $tag->last_name
+			    			);
+			    		}
+			    	}
+
+		    		$album['album']['photos'][] = array(
+		    			'id' => $photo->id,
+		    			'url' => $photo->path,
+		    			'thumb' => $photo->thumb_path,
+		    			'votes' => $photo->votes,
+		    			'caption' => $photo->caption,
+		    			'date' => date('F j, Y', strtotime($photo->created_at)),
+		    			'tags' => $tags
+		    		);
+		    	}
+		    }
+		}
+    	return Response::json($album);
     }
 
     public function get_tumbler()

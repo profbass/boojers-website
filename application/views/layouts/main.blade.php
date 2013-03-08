@@ -6,8 +6,11 @@
         <meta name="keywords" content="@yield('page_keywords')">
         <meta name="description" content="@yield('page_description')">
         <meta name="robots" content="index,follow">
+        <meta property="og:title" content="Boojer: Noun. 1. A unique (and sometimes quirky) individual marked by an independent, creative spirit. 2. Someone lucky enough to work for booj.">
+        <meta property="og:url" content="http://www.boojers.com/">
+        <meta property="og:image" content="http://www.boojers.com/img/boojers-header-logo.png">
         <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
-        <title>Booj @yield('page_title')</title>
+        <title>Boojers @yield('page_title')</title>
         <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
         <link href="/dist/style.min.css" rel="stylesheet">
         {{ Asset::styles() }}
@@ -49,7 +52,7 @@
         {{ Asset::scripts() }}
         @yield('scripts')
         <script>
-            var _gaq = _gaq || []; _gaq.push(['_setAccount', '']); _gaq.push(['_trackPageview']); (function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
+            var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-244849-37']); _gaq.push(['_trackPageview']); (function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
         </script>
     </body>
 </html>

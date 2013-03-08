@@ -6,7 +6,7 @@
                     &nbsp;
                 </div>
                 <div class="span5 text-right">
-                    <a href="https://www.facebook.com/activewebsite" target="_blank"><i class="bicon-facebook margin-right-5"></i></a>
+                    <a href="https://www.facebook.com/boojers" target="_blank"><i class="bicon-facebook margin-right-5"></i></a>
                     <a href="http://www.twitter.com/boojers" target="_blank"><i class="bicon-twitter margin-right-5"></i></a>
                     <a href="https://plus.google.com/107717391600262472445" target="_blank"><i class="bicon-google-plus margin-right-5"></i></a>
                     <a href="http://www.youtube.com/boojvideos" target="_blank"><i class="bicon-youtube margin-right-5"></i></a>
@@ -20,8 +20,8 @@
         <div class="container-fluid">
             <div class="row-fluid">
                 <div class="span6 margin-bottom-30 clearfix">
-                    <a href="http://www.facebook.com/ActiveWebsite" target="_blank"><img src="/img/footer-facebook-circle.png" class="pull-left margin-right-30" alt="Facebook. Like us to stay in the loop with the latest technology trends."></a>
-                    <div class="fb-like-box" data-href="https://www.facebook.com/ActiveWebsite" data-colorscheme="dark" data-width="292" data-border_color="#303030" data-show-faces="true" data-stream="false" data-header="false"></div>
+                    <a href="http://www.facebook.com/boojers" target="_blank"><img src="/img/footer-facebook-circle.png" class="pull-left margin-right-30" alt="Facebook. Like us to stay in the loop with the latest technology trends."></a>
+                    <div class="fb-like-box" data-href="https://www.facebook.com/boojers" data-colorscheme="dark" data-width="292" data-border_color="#303030" data-show-faces="true" data-stream="false" data-header="false"></div>
 
                 </div>
                 <div class="span6 margin-bottom-30 clearfix">

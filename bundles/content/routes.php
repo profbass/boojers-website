@@ -16,12 +16,14 @@ ROUTE::get('/get_home_images', 'content::home@home_images');
 
 Route::get('/boojers', 'content::home@boojers');
 Route::get('/boojers/(:any)', 'content::home@show_boojer');
-Route::post('/boojers/(:any)', 'content::home@show_boojer');
 
 Route::get('/watercooler', 'content::home@tumbler');
 
+Route::get('/contact-us', 'content::home@contact');
+Route::post('/contact-us', array('before' => 'csrf', 'uses' => 'content::home@contact'));
 Route::get('/contact', 'content::home@contact');
 Route::post('/contact', array('before' => 'csrf', 'uses' => 'content::home@contact'));
+
 
 Route::get('/', 'content::home@homepage');
 Route::get('/(:any)', 'content::home@index');

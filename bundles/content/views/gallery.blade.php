@@ -25,14 +25,14 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 		    <div class="span12 relative" id="boojer-gallery">
-		        <h1 class="large-heading">Browse our photo galleries...</h1>
+		        <h1 class="large-heading">browse our photo galleries...</h1>
 	        	@if (!empty($page_data->cmspage->content))
 		            <div class="content-heading">{{ $page_data->cmspage->content }}</div>
 		        @endif
 		        @if (!empty($galleries) && !empty($galleries->results))
 		        	<ul class="thumbnails">
 			        	@foreach($galleries->results as $gallery)
-			        		<li class="span2">
+			        		<li>
 				        		@if (!empty($gallery->photos))
 			        				@foreach($gallery->photos as $photo)
 				        				<a class="gallery-link" target="_blank" href="/gallery/{{ $gallery->slug }}" data-id="{{ $gallery->id }}"><img src="{{ $photo->thumb_path }}" alt="thumb"></a>
@@ -62,11 +62,6 @@
 @endsection
 
 @section('scripts')
-	<div class="hidden">
-		<div id="gallery-viewer">
-			<p class="text-center margin-top-30"><img src="/img/ajax-loader.gif" alt=""></p>
-		</div>
-	</div>
     <script>
 		$(function () {
 			pageJS.galleryPage();

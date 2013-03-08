@@ -18,19 +18,26 @@
         <header id="site-header">
             <div class="navbar">
                 <div class="navbar-inner clearfix">
-                    <ul class="nav" id="js-menu">
-                        @if (isset($menu_items))
-                            @foreach ($menu_items as $menu_item)
-                                <li class="<? if ( $current_uri == $menu_item->uri || ($parent_menu_item == $menu_item->uri)) { echo 'active'; }?>">
-                                    @if ($menu_item->controller == 'link')
-                                        <a href="{{ $menu_item->uri }}" target="_blank" rel="nofollow" title="{{ $menu_item->pretty_name }}">{{ $menu_item->pretty_name }}</a>
-                                    @else
-                                        <a href="{{ $menu_item->uri }}" title="{{ $menu_item->pretty_name }}">{{ $menu_item->pretty_name }}</a>
-                                    @endif
-                                </li>
-                            @endforeach
-                        @endif
-                    </ul>
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav" id="js-menu">
+                            @if (isset($menu_items))
+                                @foreach ($menu_items as $menu_item)
+                                    <li class="<? if ( $current_uri == $menu_item->uri || ($parent_menu_item == $menu_item->uri)) { echo 'active'; }?>">
+                                        @if ($menu_item->controller == 'link')
+                                            <a href="{{ $menu_item->uri }}" target="_blank" rel="nofollow" title="{{ $menu_item->pretty_name }}">{{ $menu_item->pretty_name }}</a>
+                                        @else
+                                            <a href="{{ $menu_item->uri }}" title="{{ $menu_item->pretty_name }}">{{ $menu_item->pretty_name }}</a>
+                                        @endif
+                                    </li>
+                                @endforeach
+                            @endif
+                        </ul>
+                    </div>
                 </div>
             </div>
         </header>

@@ -14,6 +14,15 @@ class Photo extends Eloquent {
 	public static $timestamps = true;
 	public static $table = 'photos';
 
+	protected function blow_out_album_cache()
+	{
+		$album = Album::find($this->album_id);
+		if ($album) {
+			Cache::forget('album-full-' . $album->id);
+			Cache::forget('album-' . $album->slug);
+		}
+	}
+
 	public static function resize_photo($src, $save, $width, $height, $mode = 'crop')
 	{
 		// define our path...
@@ -24,7 +33,7 @@ class Photo extends Eloquent {
 		$a->save( $_SERVER['DOCUMENT_ROOT'] . $path . $save , 100 );
 	}
 
-	public static function get_popular_as_json($count = 10) 
+	public static function get_popular($count = 10) 
 	{
 		$photos = Photo::order_by('votes', 'DESC')->paginate($count);
 		$data['thumbs'] = array();
@@ -40,7 +49,7 @@ class Photo extends Eloquent {
 			}
 		}
 		return $data;
-	}
+	}	
 
 	public static function vote($id = FALSE, $plus = 1) 
 	{
@@ -56,6 +65,9 @@ class Photo extends Eloquent {
 				}
 				$item->votes = $t;
 				$item->save();	
+			
+				$item->blow_out_album_cache();
+
 				return $item->votes;
 			}
 		}
@@ -94,7 +106,7 @@ class Photo extends Eloquent {
 
 					$ext = File::extension($photo_raw['name']);
 					
-					$photo = uniqid('album' . $id . '-') . '.' . $ext;
+					$photo = uniqid('album-' . $id . '-') . '.' . $ext;
 					$photo_small = uniqid('album-thumb-' . $id . '-') . '.' . $ext;
 					$photo_alt = uniqid('album-thumb-alt-' . $id . '-') . '.' . $ext;
 					
@@ -107,6 +119,8 @@ class Photo extends Eloquent {
 						$item->thumb_path = $path . $photo_small;
 						$item->thumb_alt_path = $path . $photo_alt;
 						$item->save();
+
+						$item->blow_out_album_cache();						
 
 						Photo::resize_photo($photo, $photo, $dimsBig['width'] , $dimsBig['height'], $dimsBig['resize']);
 						Photo::resize_photo($photo, $photo_small, $dimsSmall['width'] , $dimsSmall['height'], $dimsSmall['resize']);
@@ -167,6 +181,8 @@ class Photo extends Eloquent {
 					}
 				}
 
+				$item->blow_out_album_cache();
+
 				return TRUE;
 			}
 		}
@@ -183,10 +199,13 @@ class Photo extends Eloquent {
 					$item->caption = $args['caption'];
 				}
 				$item->save();
-				
+
+				$item->blow_out_album_cache();
+
 				return TRUE;
 			}
 		}
+
 		return FALSE;
 	}
 
@@ -202,6 +221,8 @@ class Photo extends Eloquent {
 				@unlink($_SERVER['DOCUMENT_ROOT'] . $item->path);
 				@unlink($_SERVER['DOCUMENT_ROOT'] . $item->thumb_path);
 				@unlink($_SERVER['DOCUMENT_ROOT'] . $item->thumb_alt_path);
+				
+				$item->blow_out_album_cache();
 
 				$item->delete();
 

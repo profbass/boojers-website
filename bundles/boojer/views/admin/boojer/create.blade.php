@@ -57,7 +57,7 @@
 					</div>
 				</div>
 
-				<div class="control-group{{ isset($errors) && $errors->has('slug') ? ' error' : '' }}">
+				<div class="control-group{{ isset($errors) && $errors->has('title') ? ' error' : '' }}">
 					<div class="control-group">
 						<?php echo Form::label('title', 'Title *', array('class' => 'control-label')); ?>
 						<div class="controls">
@@ -65,6 +65,20 @@
 								echo Form::text('title', Input::old('title'), array('class' => 'span6', 'required' => 'required', 'placeholder' => 'Enter Title'));
 							?>
 							@if ($errors && $errors->has('title'))
+								<span class="help-inline">This field is required</span>
+							@endif
+						</div>
+					</div>
+				</div>
+
+				<div class="control-group{{ isset($errors) && $errors->has('twitter_handle') ? ' error' : '' }}">
+					<div class="control-group">
+						<?php echo Form::label('twitter_handle', 'Twitter Handle', array('class' => 'control-label')); ?>
+						<div class="controls">
+							<?php
+								echo Form::text('twitter_handle', Input::old('twitter_handle'), array('class' => 'span6', 'placeholder' => 'Enter Twitter Handle'));
+							?>
+							@if ($errors && $errors->has('twitter_handle'))
 								<span class="help-inline">This field is required</span>
 							@endif
 						</div>

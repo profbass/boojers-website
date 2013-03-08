@@ -24,17 +24,26 @@ class Album extends Eloquent {
 
 	public static function get_albums($count = 12)
 	{
-		$data = Album::with('photos')->order_by('created_at', 'DESC')->paginate($count);
+		$data = Album::with('photos')->where('albums.visible', '=', 1)->order_by('created_at', 'DESC')->paginate($count);
 		return $data;
 	}
 
 	public static function get_album_by_slug($slug = FALSE)
 	{
 		$data = FALSE;
-
+		$key = 'album-' . $slug;
+		
 		if ($slug) {
+
+			if (Cache::has($key)) {
+				return Cache::get($key);
+			}
+
 			$data = Album::with('photos')->where('slug', '=', $slug)->get();
+		
 		}
+
+		Cache::forever($key, $data);
 
 		return $data;
 	}	
@@ -59,6 +68,7 @@ class Album extends Eloquent {
 			$item->slug = $item->make_slug($args['name']);
 			$item->description = !empty($args['description']) ? $args['description']: '';
 			$item->save();
+
 			return $item->id;
 		}
 		return FALSE;
@@ -74,6 +84,11 @@ class Album extends Eloquent {
 				$item->slug = $item->make_slug($args['name']);
 				$item->description = !empty($args['description']) ? $args['description']: '';
 				$item->save();
+
+				// remove caches
+				Cache::forget('album-full-' . $item->id);
+				Cache::forget('album-' . $item->slug);
+
 				return $item->id;
 			}
 		}
@@ -93,11 +108,20 @@ class Album extends Eloquent {
 
 	public static function get_by_id_with_photos_and_tags($id = FALSE)
 	{
+		$key = 'album-full-' . $id;
+		$data = FALSE;
+
 		if ($id) {
-			$item = Album::with(array('photos', 'photos.tags'))->find($id);
-			return $item;
+			if (Cache::has($key)) {
+				return Cache::get($key);
+			}
+
+			$data = Album::with(array('photos', 'photos.tags'))->find($id);
+
+			Cache::forever($key, $data);
 		}
-		return FALSE;
+
+		return $data;
 	}	
 
 	public static function delete_item($id = FALSE)
@@ -108,6 +132,11 @@ class Album extends Eloquent {
 				foreach ($item->photos as $photo) {
 					Photo::destroy($photo->id);
 				}
+
+				// remove caches
+				Cache::forget('album-full-' . $item->id);
+				Cache::forget('album-' . $item->slug);
+
 				$item->delete();
 				return TRUE;
 			}

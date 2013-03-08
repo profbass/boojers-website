@@ -12,5 +12,6 @@ return array(
     'content' 		=> array('handles' => 'content', 'auto' => true),
     'admin' 		=> array('handles' => 'admin', 'auto' => true),
     'boojer'		=> array('handles' => 'boojer', 'auto' => true),
+    'tumbler'		=> array('handles' => 'tumbler', 'auto' => true),
     'resizer'		=> array('auto' => true),
 );

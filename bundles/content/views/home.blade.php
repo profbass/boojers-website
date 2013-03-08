@@ -23,7 +23,13 @@
 @section('content')
 <div class="row-fluid">
     <div class="span12 relative" id="boojer-homepage">
-        <div id="home-gallery" class="clearfix"></div>
+        <div id="home-gallery" class="clearfix">
+            <? if (1==2 && !empty($images['thumbs'])): ?>
+                <? foreach ($images['thumbs'] as $image): ?>
+                    <a href="<?=$image['url']; ?>" target="_blank" rel="home-galler" class="viewImageAction"><img src="<?=$image['thumbUrl']; ?>" alt="" data-width="<?=$image['twidth']; ?>" data-height="<?=$image['theight']; ?>"></a>
+                <? endforeach; ?>
+            <? endif; ?>
+        </div>
         @if (!empty($page_data->cmspage->content))
             <div class="content-heading">{{ $page_data->cmspage->content }}</div>
         @endif

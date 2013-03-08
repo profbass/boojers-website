@@ -12,11 +12,11 @@
  		<p>Welcome to your admin panel. Use the navigation at the top to manage your site.</p>
 
  		<ul class="unstyled">
- 			<li><a href="/admin/content">Content</a></li>
- 			<li><a href="/admin/users">Users</a></li>
- 			<li><a href="/admin/myaccount">My Account</a></li>
- 			<li>&nbsp;</li>
- 			<li><a href="/admin/logout">Logout</a></li>
+ 			<? if (!empty($menu)): ?>
+ 				<? foreach ($menu as $key => $value): ?>
+ 					<li><a href="<?=$value;?>"><?=$key;?></a></li>
+ 				<? endforeach; ?>
+ 			<? endif; ?>
  		</ul>
 	</div>
 </div>

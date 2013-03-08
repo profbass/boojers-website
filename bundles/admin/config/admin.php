@@ -10,6 +10,7 @@ return array(
 		'Content' => '/admin/content',
 		'Users' => '/admin/users',
 		'Boojers' => '/admin/boojer',
+		'Tumbler' => '/admin/tumbler',
 		'My Account' => '/admin/myaccount',
 		'Logout' => '/admin/logout',
 	),

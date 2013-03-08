@@ -20,7 +20,7 @@ class Content_Home_Controller extends Content_Base_Controller {
 
     public function get_home_images()
     {
-    	$data = Boojer\Models\Photo::get_popular_as_json(60);
+    	$data = Boojer\Models\Photo::get_popular(50);
     	
     	return Response::json($data);
     }
@@ -35,6 +35,8 @@ class Content_Home_Controller extends Content_Base_Controller {
 
 		$this->view_arguments['page_data'] = $home_page;
 
+		// $this->view_arguments['images'] = Boojer\Models\Photo::get_popular(50);
+
 		return View::make('content::home', $this->view_arguments);
     }
 
@@ -48,7 +50,7 @@ class Content_Home_Controller extends Content_Base_Controller {
 
 		$this->view_arguments['page_data'] = $page;
 
-		$this->view_arguments['galleries'] = Boojer\Models\Album::get_albums();
+		$this->view_arguments['galleries'] = Boojer\Models\Album::get_albums(12);
 
 		return View::make('content::gallery', $this->view_arguments);
     }
@@ -73,7 +75,10 @@ class Content_Home_Controller extends Content_Base_Controller {
 		    		if (!empty($photo->tags)) {
 			    		foreach ($photo->tags as $tag) {
 			    			$tags[] = array(
-			    				'name' => $tag->first_name . ' ' . $tag->last_name
+			    				'name' => $tag->first_name . ' ' . $tag->last_name,
+			    				'id' => $tag->id,
+			    				'username' => $tag->username,
+			    				'photo' => $tag->professional_photo_small
 			    			);
 			    		}
 			    	}
@@ -102,6 +107,18 @@ class Content_Home_Controller extends Content_Base_Controller {
 		}
 
 		$this->view_arguments['page_data'] = $page;
+		$tumblers = Tumbler\Models\Tumbler::get_recent(20);
+
+		$chunks = array();
+
+		$i = 0;
+		foreach($tumblers->results as $obj) {
+		    $chunks[$i%4][] = $obj; 
+		    $i++;
+		}
+
+		$this->view_arguments['raw_tumblers'] = $tumblers;
+		$this->view_arguments['tumbler_chunks'] = $chunks;
 
 		return View::make('content::tumbler', $this->view_arguments);
     }
@@ -142,31 +159,22 @@ class Content_Home_Controller extends Content_Base_Controller {
 		return View::make('content::boojers', $this->view_arguments);
     }
 
-    public function get_show_boojer($id = FALSE)
+    public function get_show_boojer($username = FALSE)
     {
-		$user = Boojer\Models\Boojer::get_for_bio($id);
+		$user = Boojer\Models\Boojer::get_by_username($username);
 		
 		if (!$user) {
-			Response::error('404');
+			return Response::error('404');
 		}
+
+		$this->view_arguments['page_data'] = Menuitem::get_page_by_uri(URI::segment(1));
+
+		$view = Request::ajax() ? 'content::view_boojer_ajax' : 'content::view_boojer';
 
 		$this->view_arguments['boojer'] = $user;
 
-		return View::make('content::view_boojer', $this->view_arguments);
+		return View::make($view, $this->view_arguments);
     }
-
-    public function post_show_boojer($id = FALSE)
-    {
-		$user = Boojer\Models\Boojer::get_for_bio($id);
-		
-		if (!$user) {
-			Response::error('404');
-		}
-
-		$this->view_arguments['boojer'] = $user;
-
-		return View::make('content::view_boojer', $this->view_arguments);
-    }   
 
     public function get_show_gallery($slug = FALSE)
     {
@@ -180,8 +188,6 @@ class Content_Home_Controller extends Content_Base_Controller {
 
 		return View::make('content::view_gallery', $this->view_arguments);
     }
-
-
 
     public function get_contact()
     {
@@ -218,10 +224,10 @@ class Content_Home_Controller extends Content_Base_Controller {
 
 			$mailer = IoC::resolve('mailer');
 
-			$message = Swift_Message::newInstance('Message From Booj.com Website')
+			$message = Swift_Message::newInstance('Message From Boojers.com Website')
 				->setFrom(array($input['email'] => $input['full_name'] ))
 				->setTo(array('info@booj.com' => 'Booj'))
-				->setBody('<h1>Message From Booj.com</h1><table border="0" cellpadding="10"><tbody>' . implode($html, '') . '<tr><td>Received</td><td>' . date('Y-m-d', time()) . '</td></tr></tbody></table>','text/html')
+				->setBody('<h1>Message From Boojers.com</h1><table border="0" cellpadding="10"><tbody>' . implode($html, '') . '<tr><td>Received</td><td>' . date('Y-m-d', time()) . '</td></tr></tbody></table>','text/html')
 			;
 
 			$mailer->send($message);

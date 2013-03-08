@@ -23,6 +23,10 @@ module.exports = function(grunt) {
           'public/js/lib/jquery.easing.1.3.js',
           'public/js/fancybox/jquery.fancybox.js',
           'public/js/jquery.quicksand.js',
+          'public/js/jquery.boojGallery.js',
+          'public/js/jquery.home_gallery.js',
+          'public/js/twitter-bootstrap/bootstrap-collapse.js', 
+          'public/js/twitter-bootstrap/bootstrap-transition.js', 
           'public/js/application.js'
         ],
         dest: 'public/dist/app.min.js'

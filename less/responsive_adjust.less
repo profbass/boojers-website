@@ -1,27 +1,66 @@
 // Portrait tablet to landscape and desktop
 @media (max-width: 1199px) {
-     body {
-          padding: 0;
-     }
+	body {
+		padding: 0;
+	}
 }
 
 
 // Tablets & small desktops only
 @media (min-width: 768px) and (max-width: 979px) {
-
+	.main-container {
+		padding: 0 5px;
+	}
 }
 
 
 // Phones only
 @media (max-width: 767px) {
-
+	.main-container {
+		padding: 0 5px;
+	}
+	.large-heading {
+		margin-top: 20px;
+		font-size: 40px;
+	}
+	#boojer-bio-container {
+		padding: 0 5px;
+	}
+	#site-header {
+		.navbar {
+			margin: 0;
+			.navbar-inner {
+				margin: 0;
+				padding: 0;
+				min-height: 95px;
+			}
+			.nav {
+				margin-top: 38px;
+			}
+			.nav li {
+				border-top: none;
+			}
+			.nav > li > a {
+				.rotate(0deg);
+			}
+		}
+	}
 }
 
 
 // small only
 @media (max-width: 655px) {
-     #boojer-home-circle {
-          margin: 40px;
-          left: 0;
-     }
+	#boojer-bio-container {
+		padding: 0 5px;
+	}
+	#boojer-home-circle {
+		margin: 40px;
+		left: 0;
+	}
+	#boojers-page .boojers-nav button {
+		width: 100%;
+		float: none;
+		display: block;
+		margin-top: 2px;
+	}
 }

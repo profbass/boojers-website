@@ -43,10 +43,11 @@ class Boojer_Create_Boojer {
 			$table->string('email')->unique();
 			$table->string('password')->nullable();
 			$table->string('title')->nullable();
-			$table->string('fun_photo')->nullable();
-			$table->string('fun_photo_small')->nullable();
-			$table->string('professional_photo')->nullable();
-			$table->string('professional_photo_small')->nullable();
+			$table->string('twitter_handle')->nullable();
+			$table->string('fun_photo')->nullable()->default('/img/default-avatar.jpg');
+			$table->string('fun_photo_small')->nullable()->default('/img/default-avatar.jpg');
+			$table->string('professional_photo')->nullable()->default('/img/default-avatar.jpg');
+			$table->string('professional_photo_small')->nullable()->default('/img/default-avatar.jpg');
 			$table->text('professional_bio')->nullable();
 			$table->text('fun_bio')->nullable();
 			$table->timestamps();

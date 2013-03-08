@@ -3,6 +3,7 @@ body {
 }
 .main-container {
      background: url(/img/gray-triangle.png) 0 0 no-repeat @white;
+     padding-bottom: 70px;
 }
 
 #site-header {
@@ -13,18 +14,13 @@ body {
           .navbar-inner {
                margin: 0;
                padding: 0;
-               min-height: 99px;
-          }
-          .brand {
-               margin: 0;
-               padding: 0;
+               min-height: 95px;
           }
           .nav {
 
           }
           .nav > li {
                background: @grayDarker;
-               border-top: 1px solid #313131;
           }
           .nav > li > a {
                font-size: 16px;
@@ -35,7 +31,7 @@ body {
           .nav > .active > a,
           .nav > li > a:hover,
           .nav > li > a:focus {
-               color: @red;
+               color: @white;
           }
      }
 }
@@ -74,26 +70,21 @@ body {
 }
 
 #home-gallery {
-     width: 100%;
+     .imageContainer {
+          margin: 2px;
+          float: left;
+          img {
+          }
+     }
 } 
-.imageContainer {
-     margin: 1px;
-     -webkit-user-select: none;
-     position: relative; 
-     float: left;   
-     padding: 0;
-     img {
-          max-width: none; 
-     }
-     a {
-          display: block;
-     }
-}
+
 
 #boojer-gallery {
      .thumbnails {
           margin-left: -30px;
           li {
+               width: 272px;
+               min-height: 269px;
                margin: 0 0 30px 30px;              
                background: @grayMedium;
                img {
@@ -119,8 +110,6 @@ body {
      }
 }
 
-
-
 #gallery-viewer {
      .gallery-viewer-left {
           display: table;
@@ -140,16 +129,28 @@ body {
      }
      .gallery-viewer-nav {
           position: absolute;
-          top: 40%;          
+          top: 46%;    
+          float: left;      
      }
      .gallery-viewer-next {
           right: 5px;
+
      }
      .gallery-viewer-prev {
           left: 5px;
      }
      .gallery-viewer-photo-info {
-
+          ul {
+               margin: 0;
+               li {
+                    float: left;
+                    margin: 0 10px 10px 0;
+                    img {
+                         width: 40px;
+                         margin-right: 5px;
+                    }
+               }
+          }
      }
      .gallery-viewer-right {
 
@@ -157,6 +158,42 @@ body {
      .gallery-image-loading {
 
      }
+     .gallery-viewer-photo-number {
+          margin: 30px 0 0 0;
+          font-size: 11px;
+          font-style: italic;
+     }
+}
+
+
+.tumbler-item {
+     margin: 0 0 30px 0;
+     background: @white;
+     border: 1px solid @grayMedium;
+     .tumbler-caption {
+          background: @white;
+          padding: 20px;
+     }
+     .tumbler-quote-text {
+          color: @red;
+          font-style: italic;
+          font-size: 24px;
+          margin: 0;
+          padding: 20px;
+          line-height: 30px;
+     }
+      .tumbler-tweet-text {
+          color: @white;
+          font-style: italic;
+          font-size: 24px;
+          margin-bottom: 15px;
+          line-height: 30px;
+     }    
+}
+.tumbler-tweet {
+     background: #00aced;
+     color: @white;
+     padding: 20px;
 }
 
 #boojers-page .boojers-nav {
@@ -191,21 +228,22 @@ body {
      }
 }
 
-
 #boojers-page .boojer-tab {
      display: none;
      .thumbnails {
           margin-left: -30px;
           li {
-               width: 172px;
+               width: 204px;
                float: left;
                margin: 0 0 30px 30px;              
                background: @grayMedium;
                img {
                     margin: 1px;
+                    max-height: 170px;
                }
                > div {
-                    margin: 20px;
+                    margin: 12px;
+                    height: 40px;
                }
                h3 {
                     color: @darkRed;
@@ -214,7 +252,7 @@ body {
                     margin: 0;
                }
                p {
-                    font-size: 12px;
+                    font-size: 11px;
                     margin: 0;
                     color: @black;
                     font-style: italic;
@@ -233,7 +271,6 @@ body {
           }
      }
 }
-
 
 .show-taged {
      display: inline-block;
@@ -274,31 +311,53 @@ body {
      }
 }
 
-
-#boojer-bio {
-     background: @white;
+#boojer-bio-ajax {
+      background: @white;
      padding-top: 60px;
      position: absolute;
      top: 0;
      left: 0;
      right: 0;
      z-index: 6000;
+}
+
+#boojer-bio-container {
+     .boojer-bio-section-nav {
+          background: @grayMedium;
+          .border-radius(16px);
+          a {
+               font-size: 12px;
+               text-transform: uppercase;
+               text-decoration: none;
+               padding: 8px;
+               color: @white;
+               float: left;
+               background: @grayMedium;
+               .border-radius(16px);
+               &.active {
+                    background: @red;
+               }
+          }
+     }
      .bio-section {
           h2 {
-               margin: 0 0 30px 0;
-               font-size: 50px;
+               margin: -9px 0 30px 0;
+               font-size: 40px;
                line-height: normal;
           }
           .bio-title {
-               font-size: 24px;
+               font-size: 18px;
                margin: 0;
                text-transform: uppercase;
                line-height: normal;
                color: @grayDarker;
           }
-          a {
+          .bio-twitter {
                font-size: 24px;               
           }
+     }
+     .bio-tag-list li {
+          margin-bottom: 10px;
      }
      .main-photo {
           border: 1px solid #ccc;
@@ -310,15 +369,15 @@ body {
                font-size: 24px;
                line-height: normal;
           }
-     }
-     .thumbnails {
-          margin: 0 0 0 -30px;
-          padding: 0;
-          list-style: none;
-          li {
-               width: 180px;
-               margin: 0 0 30px 30px;
-               float: left;
+          .thumbnails {
+               margin: 0 0 0 -30px;
+               padding: 0;
+               list-style: none;
+               li {
+                    width: 270px;
+                    margin: 0 0 30px 30px;
+                    float: left;
+               }
           }
      }
 }
@@ -380,9 +439,20 @@ span.sports-fan-label {
 
 #footer-top {
      background: @grayDarker;
-     padding: 10px 0;
+     padding: 10px 5px;
 }
 #footer-bottom {
      background: @grayDark;
-     padding: 50px 0 20px 0;
+     padding: 50px 5px 20px 5px;
+     color: @white;
+     font-size: 20px;
+     line-height: 26px;
+     h3 {
+          color: @white;
+     }
+     address {
+          line-height: 26px;
+          font-size: 20px;
+          margin: 0 0 20px 0;
+     }
 }

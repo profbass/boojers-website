@@ -48,8 +48,8 @@ class Boojer_Admin_Boojer_Controller extends Admin_Base_Controller {
 			'last_name' => 'required',
 			'email' => 'required|email|unique:boojers,email',			
 			'title' => 'required',
-			'professional_photo' => 'mimes:jpg,gif,png,jpeg|max:' . $max_kb,
-			'fun_photo' => 'mimes:jpg,gif,png,jpeg|max:' . $max_kb,
+			'professional_photo' => 'mimes:jpg,gif,png,jpeg',
+			'fun_photo' => 'mimes:jpg,gif,png,jpeg',
 		);
 
 		$validation = Validator::make($input, $rules);
@@ -76,11 +76,9 @@ class Boojer_Admin_Boojer_Controller extends Admin_Base_Controller {
 				'last_name' => 'required',
 				'email' => 'required|email|unique:boojers,email,' . $id,
 				'title' => 'required',
-				'professional_photo' => 'mimes:jpg,gif,png,jpeg|max:' . $max_kb,
-				'fun_photo' => 'mimes:jpg,gif,png,jpeg|max:' . $max_kb,
+				'professional_photo' => 'mimes:jpg,gif,png,jpeg',
+				'fun_photo' => 'mimes:jpg,gif,png,jpeg',
 			);
-
-			echo $max_kb;
 
 			$validation = Validator::make($input, $rules);
 

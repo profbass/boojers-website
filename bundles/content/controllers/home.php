@@ -178,13 +178,14 @@ class Content_Home_Controller extends Content_Base_Controller {
 
     public function get_show_gallery($slug = FALSE)
     {
-		$page = Boojer\Models\Album::get_album_by_slug($slug);
+		$gallery = Boojer\Models\Album::get_album_by_slug($slug);
 
-		if (!$page) {
+		if (!$gallery || empty($gallery[0])) {
 			return Response::error('404');
 		}
 
-		$this->view_arguments['page_data'] = $page;
+		$this->view_arguments['page_data'] = Menuitem::get_page_by_uri(URI::segment(1));
+		$this->view_arguments['gallery'] = $gallery[0];
 
 		return View::make('content::view_gallery', $this->view_arguments);
     }

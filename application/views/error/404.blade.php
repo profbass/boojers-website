@@ -17,11 +17,7 @@
 				<hr>
 
 				<p>
-					We couldn't find the page you requested on our servers. We're really sorry
-					about that. It's our fault, not yours. We'll work hard to get this page
-					back online as soon as possible.
-				</p>
-
+					Ohhhhh no! We couldn't find the page you requested.
 				<p>
 					Perhaps you would like to go to our <?php echo HTML::link('/', 'home page'); ?>?
 				</p>

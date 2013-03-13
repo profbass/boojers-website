@@ -17,9 +17,7 @@
 				<hr>
 
 				<p>
-				Something went wrong on our servers while we were processing your request.
-				We're really sorry about this, and will work hard to get this resolved as
-				soon as possible.
+					Well this is a bummer. Something broke pretty bad.			
 				</p>
 
 				<p>

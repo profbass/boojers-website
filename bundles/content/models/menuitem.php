@@ -45,7 +45,7 @@ class Menuitem extends Eloquent {
 			}
 		}
 
-		Cache::put($key, $level_1, 4320);
+		Cache::forever($key, $level_1);
 
 		return $level_1;
 	}
@@ -65,7 +65,7 @@ class Menuitem extends Eloquent {
 
 		$menu_item = Menuitem::with('cmspage')->where('uri', '=', '/' . $current_uri)->first();
 
-		Cache::put($key, $menu_item, 4320);
+		Cache::forever($key, $menu_item);
 
 		return $menu_item;
 	}
@@ -220,7 +220,11 @@ class Menuitem extends Eloquent {
 				$menu_item->save();
 
 				Cache::forget('main_menu_query');
-				Cache::forget('cms_page' . str_replace('/', '_', $menu_item->uri));
+				if ($menu_item->uri === '/') {
+					Cache::forget('cms_page_');
+				} else {
+					Cache::forget('cms_page' . str_replace('/', '_', $menu_item->uri));
+				}
 
 				return TRUE;
 			}

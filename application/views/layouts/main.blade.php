@@ -6,8 +6,8 @@
         <meta name="keywords" content="@yield('page_keywords')">
         <meta name="description" content="@yield('page_description')">
         <meta name="robots" content="index,follow">
-        <meta property="og:title" content="Boojer: Noun. 1. A unique (and sometimes quirky) individual marked by an independent, creative spirit. 2. Someone lucky enough to work for booj.">
-        <meta property="og:url" content="http://www.boojers.com/">
+        <meta property="og:title" content="boojers are a group of original thinkers, social media lovers, search engine optimizers, web designers and developers that are lucky enough to say they work at booj.">
+        <meta property="og:url" content="http://www.boojers.com">
         <meta property="og:image" content="http://www.boojers.com/img/boojers-header-logo.png">
         <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
         <title>Boojers @yield('page_title')</title>

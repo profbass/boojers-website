@@ -35,8 +35,6 @@ class Content_Home_Controller extends Content_Base_Controller {
 
 		$this->view_arguments['page_data'] = $home_page;
 
-		// $this->view_arguments['images'] = Boojer\Models\Photo::get_popular(50);
-
 		return View::make('content::home', $this->view_arguments);
     }
 

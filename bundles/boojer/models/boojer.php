@@ -57,7 +57,6 @@ class Boojer extends Eloquent {
 			}
 
 			// remove caches
-			Cache::forget('boojer-' . $item->username);
 			Cache::forget('all-boojers');
 
 			return $item->id;
@@ -145,7 +144,7 @@ class Boojer extends Eloquent {
 
 			$data = Boojer::with(array('tags', 'photos'))->where('username', '=', $username)->first();
 			
-			Cache::forever($key, $data);
+			Cache::put($key, $data, 30);
 		}
 
 		return $data;

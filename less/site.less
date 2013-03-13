@@ -7,14 +7,20 @@ body {
 }
 
 #site-header {
-     //http://jsfiddle.net/HRWqq/
-     background: url(/img/boojers-header-logo.png) no-repeat 0 0 @grayDarker;
+     background: @grayDarker;
      .navbar {
-          margin: 0 0 0 323px;
+          margin: 0;
           .navbar-inner {
                margin: 0;
                padding: 0;
                min-height: 95px;
+          }
+          .nav-collapse {
+               background: @grayDarker;  
+          }
+          .brand {
+               margin: 0;
+               padding: 0;
           }
           .nav {
 
@@ -73,7 +79,10 @@ body {
      .imageContainer {
           margin: 2px;
           float: left;
+          overflow: hidden;
+          height: 170px;
           img {
+               max-width: none;
           }
      }
 } 

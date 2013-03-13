@@ -9,29 +9,101 @@
 
 	HomeGallery.prototype = {
 		imageList: [],
+		rawList: [],
 
 		_build: function() {
 			var self = this;
+			this.bdy = $('body');
+			this.bdy.css('overflow-y', 'scroll');
+			
 			$.getJSON(this.options.imgSrcUrl, function(data) {
-				self.imageList = data.thumbs;
-				self._showImages();
+				self.rawList = data.thumbs;
+				self._render();
+				$(window).on('resize', function() {
+					self._render();
+				});
 			});
 		},
 
+		_render: function() {
+			var w = this.container.width(), rows = [];
+
+			this.tempItems = this.rawList.slice();
+
+			while(this.tempItems.length > 0) {
+				rows.push(this._buildImageRow(w));
+			}
+
+			for (var r in rows) {
+				for (var j in rows[r]) {
+					if (rows[r][j].el) {
+						this._updateImageElement(rows[r][j]);
+					} else {
+						this._createImageElement(rows[r][j]);
+					}
+				}
+			}
+		},
+
+		_buildImageRow: function(maxWidth) {
+			var len = 0;
+			var item;
+			var marg;
+			var diff = 0;
+			var perBlock = 0;
+			var row = [];
+			var j;
+
+			while(this.tempItems.length > 0 && len < maxWidth) {
+				item = this.tempItems.shift();
+				item.twidth = parseInt(item.twidth, 10);
+				item.theight = parseInt(item.theight, 10);
+				
+				row.push(item);
+				item.divWidth = item.twidth;
+				len += item.twidth + this.options.imageMargin;
+			}
+
+			diff = len - maxWidth;
+
+			perBlock = Math.ceil(diff / row.length);
+			
+			if (perBlock > 0) {
+				for (j = 0; j < row.length; j++) {
+					row[j].divWidth = row[j].divWidth - perBlock;
+				}
+			}
+
+			row[row.length - 1].last = true;
+
+			return row;
+		},
+
 		_showImages: function() {
-			// this.tempItems = this.imageList.slice();
 			for(var img in this.imageList) {
 				if (this.imageList.hasOwnProperty(img)) {
 					this._createImageElement(this.imageList[img]);
 				}
 			}
 		},
-	
-		_createImageElement: function (item) {
-			console.log(item);
-			var imageContainer, link, img;
+
+		_updateImageElement: function (item) {
+			var imageContainer = item.el;
 			
-			imageContainer = $('<div class="imageContainer"></div>');
+			imageContainer.css({
+				width: item.divWidth
+			});
+		},
+
+		_createImageElement: function (item) {
+			var imageContainer, link, img;
+			imageContainer = $('<div class="imageContainer"></div>').css({
+				width: item.divWidth
+			});
+
+			if (item.last) {
+				imageContainer.addClass('last')
+			}
 
 			link = $('<a class="viewImageAction" href="' + item.url + '" target="_blank" />');
 
@@ -52,7 +124,7 @@
 
 			this.container.append(imageContainer);
 
-			return imageContainer;
+			item.el = imageContainer;
 		},
 
 		widget: function() {
@@ -98,7 +170,7 @@
 
 	$.fn.homeGallery.defaults = {
 		imgSrcUrl: null,
-		imageMargin: 6
+		imageMargin: 4
 	};
 
 	$.fn.homeGallery.Constructor = HomeGallery;

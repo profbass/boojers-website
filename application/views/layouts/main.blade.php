@@ -26,6 +26,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+                    <a href="/" title="Home" class="brand"><img src="/img/boojers-header-logo.png" alt="Boojers"></a>
                     <div class="nav-collapse collapse">
                         <ul class="nav" id="js-menu">
                             @if (isset($menu_items))

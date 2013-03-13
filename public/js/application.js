@@ -132,6 +132,7 @@ var pageJS = {
 		var BODY = $('body');
 		var bio = $('<div id="boojer-bio-ajax"></div>').hide().appendTo(BODY);
 		var tempHolder = $('<ul></ul>').appendTo(BODY);
+		var currentTab = '#pro';
 
 		btns.on('click', function(e) {
 			e.preventDefault();
@@ -139,7 +140,8 @@ var pageJS = {
 			btns.removeClass('active');
 			tabs.removeClass('active')
 			el.addClass('active');
-			$(el.data('target')).addClass('active');
+			currentTab = el.data('target');
+			$(currentTab).addClass('active');
 			tempHolder.html('');
 		});
 
@@ -193,7 +195,7 @@ var pageJS = {
 		App.on('click', 'a[data-action="get-bio"]', function(e) {
 			e.preventDefault();
 			window.location.hash = '#viewing-bio';
-			bio.html('<div class="container-fluid"><p class="text-center">loading...</p></div>').css({
+			bio.html('<div class="container-fluid"><p class="text-center"><img src="/img/ajax-loader.gif" alt=""></p></div>').css({
 				top: header.height(),
 				minHeight: BODY.height()
 			}).fadeIn(600);
@@ -203,6 +205,9 @@ var pageJS = {
 			$.get($(this).attr('href'), function(data) {
 				bio.html(data);
 				bio.find('.fancybox').fancybox();
+				if (currentTab === '#fun') {
+					bio.find('a[data-target=".bio-life"]').trigger('click');
+				}
 				if ("onhashchange" in window) {
 					try {
 						window.addEventListener("hashchange", hideBio, false);

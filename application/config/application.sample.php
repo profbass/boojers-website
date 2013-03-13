@@ -4,6 +4,18 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
+	| Application Build Version
+	|--------------------------------------------------------------------------
+	|
+	| The build version string is added to the js and css file to help fixe cache
+	| issues when we update our css or js. Make sure you use build-X format. Where
+	| the X is any number. We set this as a view variable in the appliation routes file
+	*/
+
+	'build_version' => 'build-1',
+
+	/*
+	|--------------------------------------------------------------------------
 	| Application URL
 	|--------------------------------------------------------------------------
 	|

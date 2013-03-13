@@ -14,6 +14,9 @@ $fileNameKey = false;
 $lastModifiedTime = false;
 $output = false;
 
+// blow out our build version for cache...
+$file = preg_replace('/build-\d+./', '', $file);
+
 // enable gzip
 ob_start ("ob_gzhandler");
 
@@ -45,6 +48,8 @@ function compressCSS($buffer) {
     return $buffer;
 }
 
+
+
 if (file_exists($file)) {
 	$fileNameKey = $file;
 	$lastModifiedTime = filemtime($file);
@@ -57,6 +62,9 @@ if (file_exists($file)) {
 	$missing = false;
 } elseif ($type == 'css') {
 	$file = 'css/' . $file;
+
+	echo $file; die();
+
 	if (file_exists($file)) {
 		$fileNameKey = $file;
 		$lastModifiedTime = filemtime($file);

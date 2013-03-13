@@ -62,4 +62,7 @@ View::composer(array('layouts.main', 'content::layouts.home_layout'), function($
 	$view['parent_menu_item'] = Content\Models\Menuitem::get_parent_menu_item($page);
 	
 	$view['menu_items'] = Content\Models\Menuitem::get_main_menu();
+
+	// set the build version 
+	$view['build_version'] = Config::get('application.build_version');
 });

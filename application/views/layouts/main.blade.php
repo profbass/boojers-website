@@ -12,7 +12,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
         <title>Boojers @yield('page_title')</title>
         <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
-        <link href="/dist/style.min.css" rel="stylesheet">
+        <link href="/dist/style.min.<? if(!empty($build_version)) echo $build_version . '.';?>css" rel="stylesheet">
         {{ Asset::styles() }}
         @yield('styles')
         <script src="/js/lib/modernizer.min.js"></script>
@@ -48,7 +48,7 @@
         
         @yield('content')
 
-        <script src="/dist/app.min.js"></script>
+        <script src="/dist/app.min.<? if(!empty($build_version)) echo $build_version . '.';?>js"></script>
        
         {{ Asset::scripts() }}
         @yield('scripts')

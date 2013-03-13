@@ -46,7 +46,6 @@
 @endsection
 
 @section('scripts')
-    <script src="/js/jquery.gplus_gallery.js"></script>
     <script>
         $(function () {
             pageJS.homePage();

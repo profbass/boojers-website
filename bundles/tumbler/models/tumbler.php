@@ -115,9 +115,9 @@ class Tumbler extends Eloquent {
 	public static function resize_photo($src, $save, $width, $height, $resize = 'crop')
 	{
 		$path = Config::get('Tumbler::tumbler.photo_path');
-		Resizer::open( $_SERVER['DOCUMENT_ROOT'] . $path . $src )
+		Resizer::open( $_SERVER['DOCUMENT_ROOT'] . $path . '/' . $src )
 			->resize( $width , $height , $resize )
-			->save( $_SERVER['DOCUMENT_ROOT'] . $path . $save , 100 )
+			->save( $_SERVER['DOCUMENT_ROOT'] . $path . '/' . $save , 100 )
 		;
 	}
 
@@ -130,16 +130,16 @@ class Tumbler extends Eloquent {
 				$dims = Config::get('Tumbler::tumbler.photo');
 				$path = Config::get('Tumbler::tumbler.photo_path');
 
-				if (!is_dir($_SERVER['DOCUMENT_ROOT'] . substr($path, 0, -1))) {
-					mkdir($_SERVER['DOCUMENT_ROOT'] . substr($path, 0, -1));
+				if (!is_dir($_SERVER['DOCUMENT_ROOT'] . $path)) {
+					mkdir($_SERVER['DOCUMENT_ROOT'] . $path);
 				}
 
 				if (!empty($args['photo']) && $args['photo']['error'] == 0) {
 					$photo_name = uniqid('tumbler-' . $item->id . '-') . '.' . strtolower(File::extension(Input::file('photo.name')));
 					
-					Input::upload('photo', $_SERVER['DOCUMENT_ROOT'] . $path, $photo_name);
+					Input::upload('photo', $_SERVER['DOCUMENT_ROOT'] . $path . '/', $photo_name);
 
-					$item->photo = $path . $photo_name;
+					$item->photo = $path . '/' . $photo_name;
 					$item->save();
 
 					Tumbler::resize_photo($photo_name, $photo_name, $dims['width'] , $dims['height'], $dims['resize']);

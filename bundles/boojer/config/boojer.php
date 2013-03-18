@@ -11,6 +11,6 @@ return array(
 		'fun' => 'Fun',
 		'professional' => 'Professional'
 	),
-	'avatar_path' => '/uploads/boojers/',
+	'avatar_path' => '/uploads/boojers',
 	'album_path' => '/uploads/albums/',
 );

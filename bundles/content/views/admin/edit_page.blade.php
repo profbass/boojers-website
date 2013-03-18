@@ -109,6 +109,32 @@
 					</div>
 				</div>
 
+				<div class="control-group{{ isset($errors) && $errors->has('protected') ? ' error' : '' }}">
+					<label class="control-label">Password Protected *</label>
+					<div class="controls">
+						<label class="radio inline">
+							<?=Form::radio('protected', 1, ($page->protected == 1 ? true : false)); ?>
+							Page is password protected
+						</label>
+						<label class="radio inline">
+							<?=Form::radio('protected', 0, ($page->protected == 0 ? true : false)); ?>
+							Page is not password protected
+						</label>
+						<span class="help-inline"><span class="label label-info">Security</span></span>
+					</div>
+				</div>
+
+				<div class="control-group{{ isset($errors) && $errors->has('password') ? ' error' : '' }}">
+					<?=Form::label('password', 'Password', array('class' => 'control-label')); ?>
+					<div class="controls">
+						<?=Form::text('password', Input::old('password') ? Input::old('password') : $page->password, array('class' => 'span6', 'placeholder' => 'Enter Password'));?>
+						<span class="help-inline"><span class="label label-info">Security</span></span>
+						@if ($errors && $errors->has('password'))
+							<span class="help-inline">This field is required</span>
+						@endif
+					</div>
+				</div>
+
 				<div class="form-actions">
 					<button type="submit" name="submit" value="1" class="btn btn-large btn-success">Save Changes</button>
 				</div>

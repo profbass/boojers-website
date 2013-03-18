@@ -168,9 +168,9 @@ class Boojer extends Eloquent {
 	public static function resize_photo($src, $save, $width, $height, $resize = 'crop')
 	{
 		$path = Config::get('Boojer::boojer.avatar_path');
-		Resizer::open( $_SERVER['DOCUMENT_ROOT'] . $path . $src )
+		Resizer::open( $_SERVER['DOCUMENT_ROOT'] . $path . '/' . $src )
 			->resize( $width , $height , $resize )
-			->save( $_SERVER['DOCUMENT_ROOT'] . $path . $save , 100 )
+			->save( $_SERVER['DOCUMENT_ROOT'] . $path . '/' . $save , 100 )
 		;
 	}
 
@@ -184,18 +184,18 @@ class Boojer extends Eloquent {
 				$dimsSmall = Config::get('Boojer::boojer.avatar_small');
 				$path = Config::get('Boojer::boojer.avatar_path');
 
-				if (!is_dir($_SERVER['DOCUMENT_ROOT'] . substr($path, 0, -1))) {
-					mkdir($_SERVER['DOCUMENT_ROOT'] . substr($path, 0, -1));
+				if (!is_dir($_SERVER['DOCUMENT_ROOT'] . $path)) {
+					mkdir($_SERVER['DOCUMENT_ROOT'] . $path);
 				}
 
 				if (!empty($args['professional_photo']) && $args['professional_photo']['error'] == 0) {
 					$photo_p_name = uniqid('boojer-pro-' . $item->id . '-') . '.' . strtolower(File::extension(Input::file('professional_photo.name')));
 					$photo_p_small = uniqid('boojer-pro-thumb-' . $item->id . '-') . '.' . strtolower(File::extension(Input::file('professional_photo.name')));
 					
-					Input::upload('professional_photo', $_SERVER['DOCUMENT_ROOT'] . $path, $photo_p_name);
+					Input::upload('professional_photo', $_SERVER['DOCUMENT_ROOT'] . $path . '/', $photo_p_name);
 
-					$item->professional_photo = $path . $photo_p_name;
-					$item->professional_photo_small = $path . $photo_p_small;
+					$item->professional_photo = $path . '/' . $photo_p_name;
+					$item->professional_photo_small = $path . '/' . $photo_p_small;
 					$item->save();
 
 					Boojer::resize_photo($photo_p_name, $photo_p_name, $dimsBig['width'] , $dimsBig['height'], $dimsBig['resize']);
@@ -206,10 +206,10 @@ class Boojer extends Eloquent {
 					$photo_f_name = uniqid('boojer-fun-' . $item->id . '-') . '.' . strtolower(File::extension(Input::file('fun_photo.name')));
 					$photo_f_small = uniqid('boojer-fun-thumb-' .$item->id . '-') . '.' . strtolower(File::extension(Input::file('fun_photo.name')));
 
-					Input::upload('fun_photo', $_SERVER['DOCUMENT_ROOT'] . $path, $photo_f_name);
+					Input::upload('fun_photo', $_SERVER['DOCUMENT_ROOT'] . $path . '/', $photo_f_name);
 				
-					$item->fun_photo = $path . $photo_f_name;
-					$item->fun_photo_small = $path . $photo_f_small;
+					$item->fun_photo = $path . '/' . $photo_f_name;
+					$item->fun_photo_small = $path . '/' . $photo_f_small;
 					$item->save();
 				
 					Boojer::resize_photo($photo_f_name, $photo_f_name, $dimsBig['width'] , $dimsBig['height']);

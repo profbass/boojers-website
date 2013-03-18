@@ -23,6 +23,8 @@ class Content_Install {
 			$table->string('meta_keyword')->nullable();
 			$table->string('meta_title')->nullable();
 			$table->string('meta_description')->nullable();
+			$table->integer('protected')->unsigned()->default(0);
+			$table->string('password')->nullable();
 			$table->date('created_at')->nullable()->default('0000-00-00 00:00:00');
 			$table->date('updated_at')->nullable()->default('0000-00-00 00:00:00');
 		});

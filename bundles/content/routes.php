@@ -23,7 +23,7 @@ Route::get('/contact-us', 'content::home@contact');
 Route::post('/contact-us', array('before' => 'csrf', 'uses' => 'content::home@contact'));
 Route::get('/contact', 'content::home@contact');
 Route::post('/contact', array('before' => 'csrf', 'uses' => 'content::home@contact'));
-
+Route::post('/page_login', array('before' => 'csrf', 'uses' => 'content::home@page_login'));
 
 Route::get('/', 'content::home@homepage');
 Route::get('/(:any)', 'content::home@index');

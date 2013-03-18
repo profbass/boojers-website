@@ -1,21 +1,51 @@
 <?php
 
 use Content\Models\Menuitem as Menuitem;
-use Blog\Models\Tag as Tag;
+use \Laravel\Config as Config;
 
 class Content_Home_Controller extends Content_Base_Controller {
     
     public function get_index($uri = false)
     {
 		$page = Menuitem::get_page_by_uri($uri);
-		
+
 		if (!$page) {
 			return Response::error('404');
 		}
 
+		$pass = TRUE;
+
 		$this->view_arguments['page_data'] = $page;
 
-		return View::make('content::index', $this->view_arguments);
+		if ($page->protected == 1) {
+			$pass = Menuitem::do_i_have_page_permission($page->id);
+		}
+
+		if ($pass) {
+			return View::make('content::index', $this->view_arguments);
+		} else {
+			return View::make('content::login', $this->view_arguments);
+		}
+    }
+
+    public function post_page_login() {
+		$input = Input::all();
+		
+		$rules = array(
+			'password' => 'required',
+		);
+
+		$validation = Validator::make($input, $rules);
+
+		if ($validation->fails()) {
+			return Redirect::back()->with_errors($validation);
+		} else {
+			$test = Menuitem::login_for_page($input);
+			if ($test) {
+				return Redirect::to($test)->with('success_message', 'You are now logged in.');
+			}
+		}
+		return Redirect::back()->with('error_message', 'Login Error.');
     }
 
     public function get_home_images()
@@ -211,27 +241,19 @@ class Content_Home_Controller extends Content_Base_Controller {
 		$validation = Validator::make($input, $rules);
 
 		if ($validation->fails()) {
-			return Redirect::back()->with_input()->with_errors($validation);
+			return Redirect::to_action('@contact-us')->with_input()->with_errors($validation);
 		} else {
 			Bundle::start('swiftmailer');
-
-			$html = array();
-
-			foreach ($input as $key => $value) {
-				$html[] = '<tr><td>' . ucwords(str_replace('_', ' ', $key)) . '</td><td>' . $value . '</td></tr>';
-			}
-
+			$args['form_data'] = $input;
+			$html = View::make('Content::contact.email', $args);
 			$mailer = IoC::resolve('mailer');
-
-			$message = Swift_Message::newInstance('Message From Boojers.com Website')
+			$message = Swift_Message::newInstance(Config::get('Content::email.email_subject'))
 				->setFrom(array($input['email'] => $input['full_name'] ))
-				->setTo(array('info@booj.com' => 'Booj'))
-				->setBody('<h1>Message From Boojers.com</h1><table border="0" cellpadding="10"><tbody>' . implode($html, '') . '<tr><td>Received</td><td>' . date('Y-m-d', time()) . '</td></tr></tbody></table>','text/html')
+				->setTo(array(Config::get('Content::email.email_address') => Config::get('Content::email.email_name')))
+				->setBody($html,'text/html')
 			;
-
 			$mailer->send($message);
-
-			return Redirect::back()->with('success_message', 'Thank you! Your message has been sent.');
+			return Redirect::to_action('@contact-us')->with('success_message', 'Thank you! Your message has been sent.');
 		}
     }
 }

@@ -52,8 +52,11 @@
 							</div>
 							<div class="span2">
 								<?=$section->pretty_name; ?>
+								<? if ($section->protected == 1): ?>
+									<span class="label label-important">protected</span>
+								<? endif; ?>
 							</div>
-							<div class="span6">
+							<div class="span3">
 								<div class="btn-toolbar">
 									<div class="btn-group">
 										<a href="<?=$controller_alias; ?>/edit/<?=$section->id; ?>" class="btn btn-mini btn-primary"><i class="icon-pencil icon-white"></i> Edit Page</a>
@@ -67,6 +70,17 @@
 										<?php endif; ?>
 									</div>
 								</div>
+							</div>
+							<div class="span3">
+								<button class="btn btn-mini toggle-move-form pull-left" style="margin-right: 10px;">Move Item</button>
+								<?=Form::open($controller_alias . '/move_page', null, array('class' => 'form-inline', 'style' => 'display:none; margin: 0') ); ?>
+									<?=Form::hidden('child_id', $section->id); ?>
+									<?=Form::hidden('old_parent_id', 0); ?>
+									<? $temp = $top_level_names; unset($temp[$section->id]); ?>
+									<?=Form::select('parent_id', $temp); ?>
+									<input type="submit" name="Move" value="Move" class="btn btn-success">
+									<?=Form::token(); ?>
+					    		<?=Form::close(); ?>						    		
 							</div>
 							<div class="span1">
 								<?php if (isset($section->children)): ?>
@@ -93,6 +107,9 @@
 											</div>
 											<div class="span2">
 												<?=$child->pretty_name; ?>
+												<? if ($child->protected == 1): ?>
+													<span class="label label-important">protected</span>
+												<? endif; ?>
 											</div>
 											<div class="span3">
 												<div class="btn-toolbar">
@@ -110,10 +127,12 @@
 												</div>
 											</div>
 											<div class="span3">
-												<?=Form::open($controller_alias . '/move_page', null, array('class' => 'form-inline') ); ?>
+												<button class="btn btn-mini toggle-move-form pull-left" style="margin-right: 10px;">Move Item</button>
+												<?=Form::open($controller_alias . '/move_page', null, array('class' => 'form-inline', 'style' => 'display:none; margin: 0') ); ?>
 													<?=Form::hidden('child_id', $child->id); ?>
 													<?=Form::hidden('old_parent_id', $child->parent_id); ?>
-													<?=Form::select('parent_id', $top_level_names); ?>
+													<? $temp = $top_level_names; $temp[0] = 'Top Level'; ?>
+													<?=Form::select('parent_id', $temp); ?>
 													<input type="submit" name="Move" value="Move" class="btn btn-success">
 													<?=Form::token(); ?>
 									    		<?=Form::close(); ?>	   
@@ -142,6 +161,10 @@
 @section('scripts')
 <script>
 jQuery(document).ready(function($) {
+	$('button.toggle-move-form').on('click', function(e) {
+		e.preventDefault();
+		$(this).next('form').toggle();
+	});
 	$('a[data-action="toggle-table"]').on('click', function(e) {
 		var el, i, t;
 		e.preventDefault();

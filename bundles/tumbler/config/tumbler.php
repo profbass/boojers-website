@@ -8,5 +8,5 @@ return array(
 		5 => 'Facebook',
 	),
 	'photo' => array( 'width' => 425, 'height' => 400, 'resize' => 'landscape'),
-	'photo_path' => '/uploads/tumbler/',
+	'photo_path' => '/uploads/tumbler',
 );

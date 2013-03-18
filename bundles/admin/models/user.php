@@ -63,28 +63,37 @@ class User extends Eloquent {
 	{
 		if ($id) {
 			$user = User::find($id);
+
+			$path = Config::get('Admin::admin.avatar_path');
+			$dims = Config::get('Admin::admin.avatar');
+			$dims_small = Config::get('Admin::admin.avatar_small');
+
+			if (!is_dir($_SERVER['DOCUMENT_ROOT'] . $path)) {
+				mkdir($_SERVER['DOCUMENT_ROOT'] . $path, 0777);
+			}
+
 			if ($user) {
 				$meta = $user->user_metadata;
 				if ($meta) {
 					$photo_name = uniqid('avatar-' . $user->id . '-') . '.' . strtolower(File::extension(Input::file('avatar.name')));
 					$photo_small = uniqid('avatar-small-' . $user->id . '-') . '.' . strtolower(File::extension(Input::file('avatar.name')));
-					Input::upload('avatar', $_SERVER['DOCUMENT_ROOT'] . '/uploads', $photo_name);
 					
-					$meta->avatar = '/uploads/' . $photo_name;
-					$meta->avatar_small = '/uploads/' . $photo_small;
+					Input::upload('avatar', $_SERVER['DOCUMENT_ROOT'] . $path, $photo_name);
+					
+					$meta->avatar = $path . '/' . $photo_name;
+					$meta->avatar_small = $path . '/' . $photo_small;
 					$meta->save();
 
-					$resize_file = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . $photo_name;
-					$dims = Config::get('Admin::admin.avatar');
+					$resize_file = $_SERVER['DOCUMENT_ROOT'] . $path . '/' . $photo_name;
+					
 					Resizer::open( $resize_file )
 						->resize( $dims['width'] , $dims['height'] , 'crop' )
 						->save( $resize_file , 100 )
 					;
 
-					$dims = Config::get('Admin::admin.avatar_small');
 					Resizer::open( $resize_file )
-						->resize( $dims['width'] , $dims['height'] , 'crop' )
-						->save( $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . $photo_small , 100 )
+						->resize( $dims_small['width'] , $dims_small['height'] , 'crop' )
+						->save( $_SERVER['DOCUMENT_ROOT'] . $path . '/' . $photo_small , 100 )
 					;
 				}
 				
@@ -133,6 +142,39 @@ class User extends Eloquent {
 			$user = User::find($id);
 			if ($user) {
 				$user->password = Hash::make($args['password']);
+				$user->save();
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
+
+	public static function forgot_user_password($username = FALSE, $pass = FALSE)
+	{
+		if ($username !== FALSE && $pass !== FALSE) {
+			$user = User::where('email', '=', $username)->first();
+			if ($user) {
+				$user->password_reset_hash = md5($user->id . '-' . time());
+				$user->temp_password = Hash::make($pass);
+				$user->save();
+				$user->username_hash = md5($user->email);
+				return $user;
+			}
+		}
+		return FALSE;
+	}
+
+	public static function reset_password_confirm($username_hash = FALSE, $key = FALSE)
+	{
+		if ($username_hash !== FALSE && $key !== FALSE) {
+			$user = User::where('password_reset_hash', '=', $key)->first();
+			if ($user) {
+				if (md5($user->email) != $username_hash) {
+					return FALSE;
+				}
+				$user->password_reset_hash = '';
+				$user->password = $user->temp_password;
+				$user->temp_password = '';
 				$user->save();
 				return TRUE;
 			}

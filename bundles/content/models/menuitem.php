@@ -20,6 +20,30 @@ class Menuitem extends Eloquent {
 		return FALSE;
 	}
 
+	public static function do_i_have_page_permission($id = FALSE)
+	{
+		$page = Menuitem::find($id);
+		if ($page) {
+			$test = \Laravel\Session::get('page-access-token-' . $page->password);
+			if ($test === TRUE) {
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
+
+	public static function login_for_page($args = array())
+	{
+		if (!empty($args['id']) && !empty($args['password'])) {
+			$page = Menuitem::find($args['id']);
+			if ($args['password'] === $page->password) {
+				\Laravel\Session::put('page-access-token-' . $page->password, TRUE);
+				return $page->uri;
+			}
+		}
+		return FALSE;
+	}
+
 	public static function get_main_menu() 
 	{
 		$key = 'main_menu_query';
@@ -217,6 +241,9 @@ class Menuitem extends Eloquent {
 				$menu_item->display = isset($args['display']) && $args['display'] == '1' ? 1 : 0;
 				$menu_item->meta_keyword = isset($args['meta_keyword']) ? $args['meta_keyword'] : '';
 				$menu_item->meta_description = isset($args['meta_description']) ? $args['meta_description'] : '';
+				$menu_item->protected = isset($args['protected']) && $args['protected'] == '1' ? 1 : 0;
+				$menu_item->password = isset($args['password']) ? $args['password'] : '';
+
 				$menu_item->save();
 
 				Cache::forget('main_menu_query');
@@ -233,27 +260,34 @@ class Menuitem extends Eloquent {
 		return FALSE;
 	}
 
-	protected static function move_menu_item($child_id = false, $new_parent_id = false, $old_parent_id)
+	protected static function move_menu_item($child_id = FALSE, $new_parent_id = FALSE, $old_parent_id = FALSE)
 	{
-		if ($child_id && $new_parent_id && $new_parent_id > 0 && $old_parent_id) {
-			$new_parent = Menuitem::find($new_parent_id);
-			if ($new_parent) {
-				$new_order = Menuitem::where('parent_id', '=', $new_parent_id)->count();
-
-				$child = Menuitem::find($child_id);
-				if ($child) {
-					$child->has_children = 0;
-					$child->parent_id = $new_parent->id;
-					$child->display_order = $new_order;
-					$child->height = 1;
-					$child->save();
+		if ($child_id !== FALSE && $new_parent_id !== FALSE && $old_parent_id !== FALSE) {
+			$height = 0;
+			$new_order = Menuitem::where('parent_id', '=', $new_parent_id)->count();
+			$child = Menuitem::find($child_id);
+			
+			if ($new_parent_id > 0) {
+				$parent = Menuitem::find($new_parent_id);
+				if ($parent) {
+					$height = $parent->height + 1;
+				} else {
+					return FALSE;
 				}
-
-				Menuitem::fix_order($new_parent->id);
-				Menuitem::fix_order($old_parent_id);
-
-				return TRUE;
 			}
+
+			if ($child) {
+				$child->has_children = 0;
+				$child->parent_id = $new_parent_id;
+				$child->display_order = $new_order;
+				$child->height = $height;
+				$child->save();
+			}
+
+			Menuitem::fix_order($new_parent_id);
+			Menuitem::fix_order($old_parent_id);
+
+			return TRUE;
 		}
 
 		return FALSE;

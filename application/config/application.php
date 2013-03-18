@@ -11,7 +11,7 @@ return array(
 	| the X is any number. We set this as a view variable in the appliation routes file
 	*/
 
-	'build_version' => 'build-1',
+	'build_version' => 'build-2',
 
 
 	/*

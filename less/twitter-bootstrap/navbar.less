@@ -22,6 +22,11 @@
   min-height: @navbarHeight;
   padding-left:  20px;
   padding-right: 20px;
+  #gradient > .vertical(@navbarBackgroundHighlight, @navbarBackground);
+  border: 1px solid @navbarBorder;
+  .border-radius(@baseBorderRadius);
+  .box-shadow(0 1px 4px rgba(0,0,0,.065));
+
   // Prevent floats from breaking the navbar
   .clearfix();
 }
@@ -50,6 +55,7 @@
   font-size: 20px;
   font-weight: 200;
   color: @navbarBrandColor;
+  text-shadow: 0 1px 0 @navbarBackgroundHighlight;
   &:hover,
   &:focus {
     text-decoration: none;
@@ -239,6 +245,7 @@
   padding: ((@navbarHeight - @baseLineHeight) / 2) 15px ((@navbarHeight - @baseLineHeight) / 2);
   color: @navbarLinkColor;
   text-decoration: none;
+  text-shadow: 0 1px 0 @navbarBackgroundHighlight;
 }
 .navbar .nav .dropdown-toggle .caret {
   margin-top: 8px;
@@ -259,6 +266,7 @@
   color: @navbarLinkColorActive;
   text-decoration: none;
   background-color: @navbarLinkBackgroundActive;
+  .box-shadow(inset 0 3px 8px rgba(0,0,0,.125));
 }
 
 // Navbar button for toggling navbar items in responsive layouts

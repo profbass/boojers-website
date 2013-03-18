@@ -3,7 +3,7 @@ Boojers.com Repo
 Setup git repo on the live server...
 $ git --bare init
 $ git init
-$ git remote add origin <repo url>
+$ git remote add origin git://github.com/ActiveWebsite/boojers-website.git
 $ git pull origin master
 
 

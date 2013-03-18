@@ -40,14 +40,16 @@ class Admin_Reset_Controller extends Controller {
 		        $args['link'] = $my_domain . '/admin/reset/confirm/' . $user->username_hash . '/' . $user->password_reset_hash;
 
 				Bundle::start('swiftmailer');
-				$html = View::make('Admin::login.reset_email', $args);
 				$mailer = IoC::resolve('mailer');
+
+				$html = View::make('Admin::login.reset_email', $args);
 				$message = Swift_Message::newInstance(Config::get('Admin::admin.reset_email_subject'))
-					->setFrom(array($user->email => $user->first_name . ' ' . $user->last_name))
-					->setTo(array($from => $from_name))
+					->setFrom(array($from => $from_name))
+					->setTo(array($user->email => $user->first_name . ' ' . $user->last_name))
 					->setBody($html,'text/html')
 				;
 				$mailer->send($message);
+
 				return Redirect::to(URL::to_action('admin::login'))->with('success_message', 'An email has been sent to the email address on file. It contains a link to activate your account.');
 		    } 
 		}

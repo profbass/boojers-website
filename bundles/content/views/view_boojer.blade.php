@@ -1,11 +1,11 @@
 @layout('layouts.main')
 
 @section('page_title')
-	@if (!empty($page_data->meta_title))
-		| {{ $page_data->meta_title }}
-	@elseif (!empty($page_data->pretty_name))
-		| {{ $page_data->pretty_name }}
-	@endif
+@if (!empty($page_data->meta_title))
+| {{ strtolower($page_data->meta_title) }}
+@elseif (!empty($page_data->pretty_name))
+| {{ strtolower($page_data->pretty_name) }}
+@endif
 @endsection
 
 @section('page_description')

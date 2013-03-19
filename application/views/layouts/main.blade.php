@@ -10,7 +10,7 @@
         <meta property="og:url" content="http://www.boojers.com">
         <meta property="og:image" content="http://www.boojers.com/img/boojers-header-logo.png">
         <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
-        <title>Boojers @yield('page_title')</title>
+        <title>boojers @yield('page_title')</title>
         <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
         <link href="/dist/style.min.<? if(!empty($build_version)) echo $build_version . '.';?>css" rel="stylesheet">
         {{ Asset::styles() }}

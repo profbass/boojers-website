@@ -30,8 +30,6 @@ class Admin_Login_Controller extends Controller {
 			'remember' => Input::get('remember'),
 		);
 		if (Auth::attempt($creds)) {
-			session_start();
-			$_SESSION['IsAuthorized'] = true; // this is for ckfinder...
 			return Redirect::to(URL::to_action('admin::home@index'));
 		} else {
 			return Redirect::back()->with('error_message', 'Error logging in.');

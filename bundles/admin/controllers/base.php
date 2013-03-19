@@ -22,6 +22,9 @@ class Admin_Base_Controller extends Controller {
         $this->view_arguments['admin_alias'] = $this->admin_alias;
         
         $this->view_arguments['main_admin_nav'] = Config::get('Admin::admin.main_nav');
+
+        session_start(); // this is for ckfinder...
+        $_SESSION['IsAuthorized'] = true; // this is for ckfinder...
     }
     /**
      * Catch-all method for requests that can't be matched.

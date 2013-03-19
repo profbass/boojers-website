@@ -62,9 +62,6 @@ if (file_exists($file)) {
 	$missing = false;
 } elseif ($type == 'css') {
 	$file = 'css/' . $file;
-
-	echo $file; die();
-
 	if (file_exists($file)) {
 		$fileNameKey = $file;
 		$lastModifiedTime = filemtime($file);

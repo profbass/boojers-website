@@ -190,4 +190,14 @@ class Boojer_Admin_Album_Controller extends Admin_Base_Controller {
 		}
 		return Redirect::back()->with('error_message', 'Error Occured');
 	}
+
+	public function post_update_album_cover()
+	{
+		$input = Input::all();
+
+		if (!empty($input['album_cover'])) {
+			$test = Photo::update_cover($input);
+		}
+		return '';		
+	}
 }

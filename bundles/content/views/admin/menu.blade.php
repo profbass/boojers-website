@@ -206,7 +206,7 @@ jQuery(document).ready(function($) {
 				type: "POST",
 				data: { ids: new_order.join(',') }
 			}).done(function( msg ) {
-				alert( 'Menu Item Moved.' );
+				AdminApp.showAlert( 'Menu Item Moved.', 'success');
 			});
 		}
 	});

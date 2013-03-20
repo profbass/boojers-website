@@ -31,6 +31,10 @@
 				e.preventDefault();
 				var el = $(this);
 				var obj = this;
+				var obj_data = el.data();
+				if (obj_data.galleryStart) {
+					self.currImage = parseInt(obj_data.galleryStart, 10);
+				}
 				$.fancybox({
 					href: '#gallery-viewer',
 					type: 'inline',

@@ -14,6 +14,7 @@
 		@include('boojer::admin.sidenav')
 	</div>
     <div class="span9">
+     	<a href="<?=$controller_alias;?>/edit_album/<?=$album->id;?>" class="btn pull-right btn-primary btn-large">Edit This Album</a>
      	<h2>Photos For the Album "<?=$album->name;?>"</h2>
      	<hr>
 		<?php echo Form::open_for_files($controller_alias . '/store_album_photo/' . $album->id, null, array('class' => 'form-inline') ); ?>
@@ -44,9 +45,11 @@
 									<li role="menuitem"><a href="<?=$controller_alias . '/destroy_album_photo/' . $item->id; ?>" data-action="delete-photo"><i class="icon-remove"></i> Delete Photo</a></li>
 								</ul>
 							</div>
-							<span class="vote-count"><?=$item->votes; ?> votes</span>
-	     					
-
+							<? if($item->album_cover == 1): ?>
+								<input type="hidden" name="current_cover" value="<?=$item->id;?>">
+							<? endif; ?>
+							<span class="album-cover"><label class="radio"><input type="radio" name="album_cover" value="<?=$item->id;?>"<? if($item->album_cover == 1) echo ' checked="checked"'; ?>> Cover</label></span>
+							<span class="vote-count"><?=$item->votes; ?> votes</span>			
 							<div class="hidden">
 								<div id="tag-form-<?=$item->id;?>" style="width:400px;">
 									<form method="post" action="<?=$controller_alias;?>/update_album_photo_tags/<?=$item->id;?>">
@@ -150,10 +153,20 @@ jQuery(document).ready(function($) {
 	doc.on('click', 'a[data-action="vote-photo"]', function(e) {
 		e.preventDefault();
 		var el = $(this);
-
 		$.post(el.attr('href'), {}, function(data) {
-			console.log(data);
 			el.parents('.thumbnail').find('.vote-count').html(data + ' Votes');
+		});
+	});
+
+	doc.on('change', 'input[name="album_cover"]', function() {
+		var el = $(this);
+		var old_cover = $('input[name="current_cover"]');
+		var old_value = 0;
+		if (old_cover.length) {
+			old_value = old_cover.val();
+		}
+		$.post('<?=$controller_alias;?>/update_album_cover_photo', {'old_cover': old_value, 'album_cover': el.val()}, function() {
+			AdminApp.showAlert("Cover Saved", 'success');
 		});
 	});
 

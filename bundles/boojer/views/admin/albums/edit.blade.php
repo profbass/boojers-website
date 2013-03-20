@@ -10,6 +10,7 @@
 		@include('boojer::admin.sidenav')
 	</div>
     <div class="span9">
+     	<a href="<?=$controller_alias;?>/edit_album_photos/<?=$album->id;?>" class="btn pull-right btn-primary btn-large">Edit This Album's Photos</a>
     	<h2>Editing <?=$album->name; ?></h2>
     	<hr>
 		<?php echo Form::open($controller_alias . '/update_album/' . $album->id, null, array('class' => 'form-horizontal') ); ?>

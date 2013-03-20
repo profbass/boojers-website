@@ -10,3 +10,15 @@ jQuery(document).ready(function($) {
 		dateFormat: 'yy-mm-dd'
 	});
 });
+
+var AdminApp = {
+	showAlert: function(str, c) {
+		var type = c || 'info';
+		var notice = $('#alert-notice');
+		notice.removeClass('alert-error').removeClass('alert-success').removeClass('alert-info')
+		notice.html(str).addClass('alert-' + type).fadeIn(200);
+		setTimeout(function() {
+			notice.fadeOut(300);
+		}, 2000);
+	}	
+}

@@ -32,24 +32,19 @@
 		        @if (!empty($galleries) && !empty($galleries->results))
 		        	<ul class="thumbnails">
 			        	@foreach($galleries->results as $gallery)
-			        		<li>
-				        		@if (!empty($gallery->photos))
+			        		@if (!empty($gallery->photos))
+			        			<li>
 			        				@foreach($gallery->photos as $photo)
-				        				<a class="gallery-link" target="_blank" href="/gallery/{{ $gallery->slug }}" data-id="{{ $gallery->id }}"><img src="{{ $photo->thumb_path }}" alt="thumb"></a>
+				        				<a href="/gallery/{{ $gallery->slug }}" title="View {{ $gallery->name }}"><img src="{{ $photo->thumb_path }}" alt="thumb"></a>
 				        				<? break; ?>
 			        				@endforeach
 			        				<div>
-				        				<h3><a class="gallery-link" target="_blank" href="/gallery/{{ $gallery->slug }}" data-id="{{ $gallery->id }}">{{ $gallery->name }}</a></h3>
+				        				<h3><a href="/gallery/{{ $gallery->slug }}" title="View {{ $gallery->name }}">{{ $gallery->name }}</a></h3>
 				        				<p>{{ count($gallery->photos) }} photos</p>
 				        			</div>
-			        			@else
-			        				<img src="/img/no-photo.gif" alt="thumb">
-			        				<div>
-				        				<h3>{{ $gallery->name }}</h3>
-				        				<p>No Photos Added</p>
-				        			</div>
-			        			@endif
-			        		</li>
+				        			<a class="gallery-link gallery-slideshow-btn" target="_blank" href="/gallery/{{ $gallery->slug }}" data-id="{{ $gallery->id }}" title="View {{ $gallery->name }}">View Slideshow</a>
+				        		</li>
+		        			@endif
 			        	@endforeach
 			        </ul>
 			        <?=$galleries->links(); ?>

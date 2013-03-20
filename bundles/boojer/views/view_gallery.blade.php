@@ -31,10 +31,12 @@
 		        <h1 class="large-heading">{{ strtolower($gallery->name) }}</h1>
 		        @if (!empty($gallery->photos))
 		        	<ul class="thumbnails full-gallery-thumbnails">
+		        		<? $iter = 0; ?>
 			        	@foreach($gallery->photos as $photo)
 			        		<li>
-		        				<a class="gallery-link" target="_blank" href="#" data-id="{{ $gallery->id }}"><img src="{{ $photo->thumb_path }}" alt="thumb"></a>
+		        				<a class="gallery-link" target="_blank" href="#" data-id="{{ $gallery->id }}" data-gallery-start="<?=$iter;?>"><img src="{{ $photo->thumb_path }}" alt="thumb"></a>
 			        		</li>
+			        		<? $iter++; ?>
 			        	@endforeach
 			        </ul>
 		        @endif

@@ -35,6 +35,7 @@
                             @endif
                         </ul>
                     </div>
+                    <div id="alert-notice-wrapper" class="clearfix"><div id="alert-notice" class="alert" style="display:none;"></div></div>
                 </div>
             </div>
         </nav>
@@ -60,7 +61,6 @@
             ?>
             @yield('content')
         </div>
-
         <script src="/bundles/admin/js/jquery-1.9.1.min.js"></script>
         <script src="/bundles/admin/js/bootstrap.min.js"></script>
         <script src="/bundles/admin/js/jqueryui/jquery-ui-1.10.2.custom.min.js"></script>

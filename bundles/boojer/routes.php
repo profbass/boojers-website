@@ -3,11 +3,28 @@ Route::controller(array(
 	'boojer::home',
 ));
 
-/* admin boojer base route */
+
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/gallery', 'boojer::home@gallery');
+Route::get('/gallery/(:any)', 'boojer::home@show_gallery');
+Route::get('/get_gallery_json/(:num)', 'boojer::home@gallery_json');
+Route::get('/boojers', 'boojer::home@boojers');
+Route::get('/boojers/(:any)', 'boojer::home@show_boojer');
+
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
 // Route::get('admin/boojer', 'boojer::admin.home@index');
 Route::get('admin/boojer', 'boojer::admin.boojer@index');
 
-/* admin boojer routes */
+
 Route::get('admin/boojer/list', 'boojer::admin.boojer@index');
 Route::get('admin/boojer/create', 'boojer::admin.boojer@create');
 Route::post('admin/boojer/store', 'boojer::admin.boojer@store');
@@ -32,7 +49,7 @@ Route::post('admin/boojer/vote_down_album_photo/(:num)', 'boojer::admin.album@vo
 Route::post('admin/boojer/vote_up_album_photo/(:num)', 'boojer::admin.album@vote_up_photo');
 Route::get('admin/boojer/vote_down_album_photo/(:num)', 'boojer::admin.album@vote_down_photo');
 Route::get('admin/boojer/vote_up_album_photo/(:num)', 'boojer::admin.album@vote_up_photo');
-
+Route::post('admin/boojer/update_album_cover_photo', 'boojer::admin.album@update_album_cover');
 
 
 Route::get('admin/boojer/tags', 'boojer::admin.boojtag@index');

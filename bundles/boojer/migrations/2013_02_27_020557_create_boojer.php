@@ -21,6 +21,8 @@ class Boojer_Create_Boojer {
 			$table->integer('width')->unsigned()->nullable();
 			$table->integer('height')->unsigned()->nullable();
 			$table->integer('votes')->unsigned()->default(0);
+			$table->integer('album_cover')->unsigned()->default(0);
+			$table->integer('photo_order')->unsigned()->default(0);
 			$table->timestamps();
 		});
 

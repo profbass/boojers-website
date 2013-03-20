@@ -9,15 +9,7 @@ Route::controller(array(
 | Application Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/gallery', 'content::home@gallery');
-Route::get('/gallery/(:any)', 'content::home@show_gallery');
-Route::get('/get_gallery_json/(:num)', 'content::home@gallery_json');
 ROUTE::get('/get_home_images', 'content::home@home_images');
-
-Route::get('/boojers', 'content::home@boojers');
-Route::get('/boojers/(:any)', 'content::home@show_boojer');
-
-Route::get('/watercooler', 'content::home@tumbler');
 
 Route::get('/contact-us', 'content::home@contact');
 Route::post('/contact-us', array('before' => 'csrf', 'uses' => 'content::home@contact'));

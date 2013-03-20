@@ -209,6 +209,28 @@ class Photo extends Eloquent {
 		return FALSE;
 	}
 
+	public static function update_cover($args = array())
+	{
+		if (!empty($args['old_cover']) && $args['old_cover'] != '0') {
+			$item = Photo::find($args['old_cover']);
+			if ($item) {
+				$item->album_cover = 0;
+				$item->save();
+			}
+		}
+		if (!empty($args['album_cover'])) {
+			$item = Photo::find($args['album_cover']);
+			if ($item) {
+				$item->album_cover = 1;
+				$item->save();
+				$item->blow_out_album_cache();
+				return TRUE;
+			}
+		}
+
+		return FALSE;
+	}
+
 	public static function destroy($id = FALSE)
 	{
 		if ($id) {

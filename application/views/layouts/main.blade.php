@@ -40,8 +40,10 @@
                                     </li>
                                 @endforeach
                             @endif
+                            <li class="hidden-desktop"><a href="http://www.booj.com" target="_blank" title="visit booj.com">visit booj.com</a></li>
                         </ul>
                     </div>
+                    <a class="visit-booj-link visible-desktop" href="http://www.booj.com" target="_blank" title="visit booj.com">visit booj.com</a>
                 </div>
             </div>
         </header>

@@ -40,7 +40,7 @@
 			        				@endforeach
 			        				<div>
 				        				<h3><a href="/gallery/{{ $gallery->slug }}" title="View {{ $gallery->name }}">{{ $gallery->name }}</a></h3>
-				        				<p>{{ count($gallery->photos) }} photos</p>
+				        				<p>{{ $gallery->photo_count }} photos</p>
 				        			</div>
 				        			<a class="gallery-link gallery-slideshow-btn" target="_blank" href="/gallery/{{ $gallery->slug }}" data-id="{{ $gallery->id }}" title="View {{ $gallery->name }}">View Slideshow</a>
 				        		</li>

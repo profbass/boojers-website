@@ -29,6 +29,12 @@ class Album extends Eloquent {
 			$query->where('album_cover', '=', 1);
 		}
 		))->where('albums.visible', '=', 1)->order_by('created_at', 'DESC')->paginate($count);
+		
+		if (!empty($data->results)) {
+			foreach ($data->results as $album) {
+				$album->photo_count = DB::table('photos')->where('album_id', '=', $album->id)->count();
+			}
+		}
 		return $data;
 	}
 

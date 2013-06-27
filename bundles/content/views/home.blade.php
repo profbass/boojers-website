@@ -35,7 +35,7 @@
         @endif
         <div id="boojer-home-circle">
         	<div>
-				<p class="cabin title">/'bu dʒər/</p> <!-- /'bu d<sub>3</sub>&#399;r/ -->
+				<p class="cabin title">/'bu ʒər/</p> <!-- /'bu d<sub>3</sub>&#399;r/ -->
 				<p class="cabin">NOUN</p>
 				<p class="cabin">1. &nbsp;a unique (and sometimes quirky) individual marked by an independent, creative spirit.</p>
 				<p class="cabin">2. &nbsp;someone lucky enough to work for booj.</p>
